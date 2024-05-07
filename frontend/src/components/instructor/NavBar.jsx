@@ -80,7 +80,7 @@ function NavBar() {
               className="flex items-center space-x-6 rtl:space-x-reverse"
             >
               <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <Link className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <Link className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700 dark:focus:ring-red-600">
                   Log Out
                 </Link>
               </div>
@@ -112,7 +112,6 @@ function NavBar() {
         <aside
           id="default-sidebar"
             className={`fixed md:hidden left-0 z-40 w-64 h-full transition-transform ${
-        //   className={`fixed left-0 z-40 w-64 h-full transition-transform ${
             sidebarOpen ? "" : "-translate-x-full md:translate-x-0"
           }`}
           aria-label="Sidebar"
@@ -234,13 +233,13 @@ function NavBar() {
               <li>
                 <a
                   href="/"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-red-500 group"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="currentColor"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-red-500 group-hover:text-gray-900 dark:group-hover:text-gray-200"
                   >
                     <path
                       fillRule="evenodd"
