@@ -1,7 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import React from "react";
 
@@ -11,9 +8,11 @@ import NavigatePage from "./pages/NavigatePage"
 //admin
 import AdminHome from './pages/admin/AdminHome';
 
+//Instructor
+import InstructorHome from './pages/instructor/InstructorHome';
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -24,6 +23,9 @@ function App() {
 
           {/* admin */}
           <Route path="/AdminHome" element={<AdminHome />} />
+
+          {/* Instructor */}
+          <Route path="/instructor_home" element={<InstructorHome />} />
 
         </Routes>
       </BrowserRouter>
