@@ -17,6 +17,7 @@ import CourseManagement from './pages/instructor/CourseManagement';
 import ProgressMonitoring from './pages/instructor/ProgressMonitoring';
 import FeedbackAndReviews from './pages/instructor/FeedbackAndReviews';
 import Profile from './pages/instructor/Profile';
+import CreateNewCourse from './pages/instructor/CreateNewCourse';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/progress_monitoring" element={<ProgressMonitoring />} />
           <Route path="/feedback_and_reviews" element={<FeedbackAndReviews />} />
           <Route path="/instructor_profile" element={<Profile />} />
+          <Route path="/create_new_course" element={<CreateNewCourse />} />
           
         </Routes>
       </BrowserRouter>
