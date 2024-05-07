@@ -8,6 +8,9 @@ import React from "react";
 //pages
 import NavigatePage from "./pages/NavigatePage"
 
+//admin
+import AdminHome from './pages/admin/AdminHome';
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,7 +19,12 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* Test - Remove later */}
           <Route path="/" element={<NavigatePage />} />
+
+          {/* admin */}
+          <Route path="/AdminHome" element={<AdminHome />} />
+
         </Routes>
       </BrowserRouter>
     
