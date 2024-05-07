@@ -7,6 +7,9 @@ import NavigatePage from "./pages/NavigatePage"
 
 //admin
 import AdminHome from './pages/admin/AdminHome';
+import ViewAllCourses from './pages/admin/courses/ViewAllCourses';
+import NewCourses from './pages/admin/courses/NewCourses';
+import UpdatedCourses from './pages/admin/courses/UpdatedCourses';
 
 //Instructor
 import InstructorHome from './pages/instructor/InstructorHome';
@@ -23,6 +26,9 @@ function App() {
 
           {/* admin */}
           <Route path="/AdminHome" element={<AdminHome />} />
+          <Route path="/ViewAllCourses" element={<ViewAllCourses />} />
+          <Route path="/NewCourses" element={<NewCourses />} />
+          <Route path="/UpdatedCourses" element={<UpdatedCourses />} />
 
           {/* Instructor */}
           <Route path="/instructor_home" element={<InstructorHome />} />
