@@ -13,6 +13,10 @@ import UpdatedCourses from './pages/admin/courses/UpdatedCourses';
 
 //Instructor
 import InstructorHome from './pages/instructor/InstructorHome';
+import CourseManagement from './pages/instructor/CourseManagement';
+import ProgressMonitoring from './pages/instructor/ProgressMonitoring';
+import FeedbackAndReviews from './pages/instructor/FeedbackAndReviews';
+import Profile from './pages/instructor/Profile';
 
 
 function App() {
@@ -32,7 +36,11 @@ function App() {
 
           {/* Instructor */}
           <Route path="/instructor_home" element={<InstructorHome />} />
-
+          <Route path="/course_management" element={<CourseManagement />} />
+          <Route path="/progress_monitoring" element={<ProgressMonitoring />} />
+          <Route path="/feedback_and_reviews" element={<FeedbackAndReviews />} />
+          <Route path="/instructor_profile" element={<Profile />} />
+          
         </Routes>
       </BrowserRouter>
     
