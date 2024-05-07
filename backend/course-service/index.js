@@ -12,6 +12,11 @@ app.use(cors());
 // Connect to database
 connectDB();
 
+// Routes
+const courseRoutes = require('./src/routes/courseRoutes');
+
+app.use('/api/courses', courseRoutes);
+
 const port = process.env.PORT || 5001;
 
 app.listen(port, () => {
