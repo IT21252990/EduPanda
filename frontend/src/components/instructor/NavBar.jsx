@@ -117,11 +117,11 @@ function NavBar() {
           aria-label="Sidebar"
         >
           <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
-            <ul class="space-y-2 font-medium">
+            <ul className="space-y-2 font-medium">
               <li>
                 <a
                   href="/instructor_home"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -133,13 +133,13 @@ function NavBar() {
                     <path d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z" />
                   </svg>
 
-                  <span class="ms-3">Home</span>
+                  <span className="ms-3">Home</span>
                 </a>
               </li>
               <li>
                 <a
                   href="/course_management"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@ function NavBar() {
                     />
                   </svg>
 
-                  <span class="flex-1 ms-3 whitespace-nowrap">
+                  <span className="flex-1 ms-3 whitespace-nowrap">
                     Course Management
                   </span>
                 </a>
@@ -168,7 +168,7 @@ function NavBar() {
               <li>
                 <a
                   href="/progress_monitoring"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg
                     className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -179,7 +179,7 @@ function NavBar() {
                     <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75ZM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 0 1-1.875-1.875V8.625ZM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 0 1 3 19.875v-6.75Z" />
                   </svg>
 
-                  <span class="flex-1 ms-3 whitespace-nowrap">
+                  <span className="flex-1 ms-3 whitespace-nowrap">
                     {" "}
                     Monitor Progress
                   </span>
@@ -188,7 +188,7 @@ function NavBar() {
               <li>
                 <a
                   href="/feedback_and_reviews"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -200,7 +200,7 @@ function NavBar() {
                     <path d="M15.75 7.5c-1.376 0-2.739.057-4.086.169C10.124 7.797 9 9.103 9 10.609v4.285c0 1.507 1.128 2.814 2.67 2.94 1.243.102 2.5.157 3.768.165l2.782 2.781a.75.75 0 0 0 1.28-.53v-2.39l.33-.026c1.542-.125 2.67-1.433 2.67-2.94v-4.286c0-1.505-1.125-2.811-2.664-2.94A49.392 49.392 0 0 0 15.75 7.5Z" />
                   </svg>
 
-                  <span class="flex-1 ms-3 whitespace-nowrap">
+                  <span className="flex-1 ms-3 whitespace-nowrap">
                     {" "}
                     Feedbacks & Reviews
                   </span>
@@ -209,7 +209,7 @@ function NavBar() {
               <li>
                 <a
                   href="/instructor_profile"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg
                     className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -227,13 +227,13 @@ function NavBar() {
                     />
                   </svg>
 
-                  <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
                 </a>
               </li>
               <li>
                 <a
                   href="/"
-                  class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-red-500 group"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-red-500 group"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +248,7 @@ function NavBar() {
                     />
                   </svg>
 
-                  <span class="flex-1 ms-3 whitespace-nowrap">Log Out</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
                 </a>
               </li>
             </ul>
