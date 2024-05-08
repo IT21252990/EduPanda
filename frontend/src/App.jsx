@@ -10,6 +10,8 @@ import AdminHome from './pages/admin/AdminHome';
 import ViewAllCourses from './pages/admin/courses/ViewAllCourses';
 import NewCourses from './pages/admin/courses/NewCourses';
 import UpdatedCourses from './pages/admin/courses/UpdatedCourses';
+import Users from './pages/admin/users/users';
+import Finance from './pages/admin/finance/Finance';
 
 //Instructor
 import InstructorHome from './pages/instructor/InstructorHome';
@@ -34,6 +36,9 @@ function App() {
           <Route path="/ViewAllCourses" element={<ViewAllCourses />} />
           <Route path="/NewCourses" element={<NewCourses />} />
           <Route path="/UpdatedCourses" element={<UpdatedCourses />} />
+          <Route path="/Users" element={<Users />} />
+          <Route path="/Finance" element={<Finance />} />
+        
 
           {/* Instructor */}
           <Route path="/instructor_home" element={<InstructorHome />} />
