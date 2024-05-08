@@ -22,6 +22,11 @@ import Profile from './pages/instructor/Profile';
 import CreateNewCourse from './pages/instructor/CreateNewCourse';
 
 
+//Learner
+import LearnerDashboard from './pages/learner/LearnerDashboard'
+import MyCourses from './pages/learner/MyCourses'
+
+
 function App() {
 
   return (
@@ -47,7 +52,12 @@ function App() {
           <Route path="/feedback_and_reviews" element={<FeedbackAndReviews />} />
           <Route path="/instructor_profile" element={<Profile />} />
           <Route path="/create_new_course" element={<CreateNewCourse />} />
-          
+
+
+          {/* learner */}
+          <Route path="/LearnerDashboard" element={<LearnerDashboard />} />
+          <Route path="/MyCourses" element={<MyCourses />} />
+
         </Routes>
       </BrowserRouter>
     
