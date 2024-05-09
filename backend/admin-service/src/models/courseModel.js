@@ -18,7 +18,7 @@ const courseSchema = new mongoose.Schema({
     instructor: { type: mongoose.Schema.Types.ObjectId, ref: 'Instructor', required: true },
     status: { type: String, enum: ['Pending', 'Published', 'Rejected'], default: 'Pending' , required: true },
     Updated: { type: Boolean , default: false , required: true},
-    enrolledStudents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
+    enrolledStudents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     contents: [contentSchema] 
 },{
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
