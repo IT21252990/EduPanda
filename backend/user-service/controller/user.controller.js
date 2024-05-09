@@ -11,7 +11,7 @@ const crypto = require("crypto");
 // Generate a random secret key
 // Generate a random secret key
 const secretKey = crypto.randomBytes(32).toString('hex');
-console.log('Generated secret key:', secretKey);
+// console.log('Generated secret key:', secretKey);
 
 // Middleware to verify JWT token
 exports.verifyToken = (req, res, next) => {
@@ -29,7 +29,7 @@ exports.verifyToken = (req, res, next) => {
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      console.error('JWT verification error:', err);
+      // console.error('JWT verification error:', err);
       if (err.name === 'JsonWebTokenError') {
         return res.status(401).json({ message: 'Invalid token' });
       } else if (err.name === 'TokenExpiredError') {
@@ -74,7 +74,7 @@ exports.registerUser = async (req, res) => {
   
       res.status(201).json({ success: true , message: 'User registered successfully' });
     } catch (err) {
-      console.error(err.message);
+      // console.error(err.message);
       res.status(500).send('Server Error');
     }
 };
@@ -100,10 +100,11 @@ exports.loginUser = async (req, res) => {
   
       // Sign-in successful, generate token
       const token = jwt.sign({ id: user._id }, secretKey, { expiresIn: '1h' });
+      const role = user.role;
   
-      res.json({ success: true, message: 'Login successful', token });
+      res.json({ success: true, message: 'Login successful', token ,role});
     } catch (err) {
-      console.error(err.message);
+      // console.error(err.message);
       res.status(500).send('Server Error');
     }
 };
@@ -117,7 +118,7 @@ exports.getUser = async (req, res) => {
         }
         res.json(user); // Return user details
       } catch (error) {
-        console.error('Error fetching user profile:', error);
+        // console.error('Error fetching user profile:', error);
         res.status(500).json({ message: 'Server Error' });
       }
 };

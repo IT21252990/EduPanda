@@ -6,6 +6,7 @@ import React from "react";
 
 //pages
 import NavigatePage from "./pages/NavigatePage"
+import LandingPage from "./pages/LandingPage"
 
 //admin
 import AdminHome from './pages/admin/AdminHome';
@@ -22,8 +23,8 @@ import ProgressMonitoring from './pages/instructor/ProgressMonitoring';
 import FeedbackAndReviews from './pages/instructor/FeedbackAndReviews';
 import Profile from './pages/instructor/Profile';
 import CreateNewCourse from './pages/instructor/CreateNewCourse';
-import Login from './pages/login/LoginPage';
-import Register from './pages/login/RegisterPage';
+import Login from './pages/Auth/LoginPage';
+import Register from './pages/Auth/RegisterPage';
 import MyProfile from './pages/Myprofile/MyProfile';
 
 
@@ -35,7 +36,8 @@ function App() {
       <ToastContainer />
         <Routes>
           {/* Test - Remove later */}
-          <Route path="/" element={<NavigatePage />} />
+          {/* <Route path="/" element={<NavigatePage />} /> */}
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />

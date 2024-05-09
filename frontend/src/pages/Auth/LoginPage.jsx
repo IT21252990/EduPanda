@@ -26,7 +26,7 @@ const Login = () => {
     if (!email || !password) {
       return toast.error("All fields are required");
     }
-
+    console.log(formData)
     try {
       const response = await fetch('http://localhost:5002/api/users/login', {
         method: 'POST',
@@ -34,43 +34,47 @@ const Login = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
+        
       });
+  
 
-      const data = await response.json();
-      console.log(data); // Handle response data accordingly
-      // if (response.ok) {
-      //   console.log(data); // Handle response data accordingly
-      //   // Redirect or show success message
-      //   return toast.success("Login successful");
-      // } else {
-      //   console.error('Error:', data.error);
-      //   return toast.error(data.error || "Login failed. Check credentials.");
-      // }
- 
-      // Save token to local storage
-    localStorage.setItem("token", data.token);
-    const token = localStorage.getItem("token");
-    console.log(token)
+      const data = await response.json(); // Get response data
+      console.log(data.role); // Handle response data accordingly
 
 
-        // Redirect based on role
-        if (data.role === 'admin') {
-          navigate("/AdminHome");
-        } else if(data.role === 'instructor'){
-          navigate("/instructor_home");
-        }
-        else if(data.role === 'learner') {
-          navigate("/");
-        }
-      console.log(data.token)
+      localStorage.setItem("token", data.token); // Store token in localStorage
+      const token = localStorage.getItem("token");
+      
+
+      if (data.role === 'admin') {
+        navigate("/AdminHome");
+      } else if(data.role === 'instructor'){
+        navigate("/instructor_home");
+      }
+      else if(data.role === 'learner') {
+        navigate("/");
+      }
+
+      if (response.ok) {
+        console.log(data); // Handle response data accordingly
+        // Redirect or show success message
+        toast.success("Login successful");
+      } else {
+        console.error('Error:', data.error);
+        toast.error(data.error || "Login failed. Check credentials.");
+      }
+
+      
     } catch (error) {
       console.error('Error:', error);
       return toast.error("Login failed. Check credentials.");
     }
   };
 
+
   return (
-    <div className='login'>
+    <div style={{background: 'red'}}>
+       <div className='login'>
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
@@ -111,6 +115,8 @@ const Login = () => {
         </div>
       </section>
     </div>
+    </div>
+   
   );
 };
 
