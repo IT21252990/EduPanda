@@ -8,7 +8,7 @@ const router = express.Router();
 
 // GET all instructors
 router.get("/instructors", getAllInstructors);
-// GET new learners
+// GET all learners
 router.get("/learners", getAllLearners); 
 
 
