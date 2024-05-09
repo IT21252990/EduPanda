@@ -6,12 +6,16 @@ const Course = require('../models/courseModel');
 //@access public
 const getAllCourses = async (req, res) => {
     try {
-        const courses = await Course.find();
+        const courses = await Course.find().populate('instructor').exec();
         res.json(courses);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Error fetching courses:", error);
+        res.status(500).json({ message: "Internal server error" });
     }
 };
+
+
+
 
 
 //@desc Retrieve all new courses with update: false and status: pending
@@ -19,7 +23,7 @@ const getAllCourses = async (req, res) => {
 //@access public
 const getNewCourses = async (req, res) => {
     try {
-        const newCourses = await Course.find({ status: 'Pending', Updated: false });
+        const newCourses = await Course.find({ status: 'Pending', Updated: false }).populate('instructor').exec();
         res.json(newCourses);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -31,7 +35,7 @@ const getNewCourses = async (req, res) => {
 //@access public
 const getUpdatedCourses = async (req, res) => {
     try {
-        const updatedCourses = await Course.find({ status: 'Pending', Updated: true });
+        const updatedCourses = await Course.find({ status: 'Pending', Updated: true }).populate('instructor').exec();
         res.json(updatedCourses);
     } catch (error) {
         res.status(500).json({ message: error.message });
