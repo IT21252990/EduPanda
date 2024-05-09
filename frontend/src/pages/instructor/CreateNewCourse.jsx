@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import NavBar from "../../components/instructor/NavBar";
 import Footer from "../../components/instructor/Footer";
 
@@ -10,18 +10,25 @@ function CreateNewCourse() {
     level: "",
     category: "",
     duration: "",
-    instructor: "",
+    instructor: "609a5759f7f144001f8ab7c5",
     status: "Published",
     enrolledStudents: [],
     contents: [],
     tags: [],
   });
 
+  const [showContentFields, setShowContentFields] = useState(false);
+  const [showQuizFields, setShowQuizFields] = useState(false);
+
   const [content, setContent] = useState({
     title: "",
     type: "",
     lectureNotes: "",
     quizQuestions: [],
+  });
+
+  const [quizQuestion, setQuizQuestion] = useState({
+    question: "",
   });
 
   const handleChange = (e) => {
@@ -45,40 +52,83 @@ function CreateNewCourse() {
     });
   };
 
-  const handleAddContent = () => {
-      setContent({
-        title: "",
-        type: "",
-        lectureNotes: "",
-        quizQuestions: [],
-      });
+  const handleQuizQuestionChange = (e) => {
+    const { name, value } = e.target;
+    const updatedQuizQ = [...content.quizQuestions];
+    updatedQuizQ[index] = {
+      ...updatedQuizQ[index],
+      [name]: value,
+    };
+    setQuizQuestion({
+      ...quizQuestion,
+      question: updatedQuizQ,
+    });
   };
 
-  const handleRemoveContent = (index) => { 
+  const handleAddContent = () => {
+    setShowContentFields(true);
+    setContent({
+      title: "",
+      type: "",
+      lectureNotes: "",
+      quizQuestions: [],
+    });
+  };
+
+  const handleAddQuizQuestion = () => {
+    setShowQuizFields(true);
+    setQuizQuestion({
+      question: "",
+    });
+  };
+
+  const handleRemoveContent = (index) => {
     const updatedContents = [...courseData.contents];
     updatedContents.splice(index, 1);
     setCourseData({
-     ...courseData,
+      ...courseData,
       contents: updatedContents,
     });
-  }
+  };
+
+  const handleRemoveQuizQuestion = (cIndex, qIndex) => {
+    const updatedContents = [...courseData.contents];
+    const updatedQuestions = [...updatedContents[cIndex].quizQuestions];
+    updatedQuestions.splice(qIndex, 1);
+    updatedContents[cIndex].quizQuestions = updatedQuestions;
+    setCourseData({
+      ...courseData,
+      contents: updatedContents,
+    });
+  };
 
   const saveContent = () => {
     if (content.title && content.type && content.lectureNotes) {
-        setCourseData({
-          ...courseData,
-          contents: [...courseData.contents, content],
-        });
+      setCourseData({
+        ...courseData,
+        contents: [...courseData.contents, content],
+      });
+      setShowContentFields(false);
     } else {
-        console.error("Content title, type, and lecture notes are required.");
-      }
-  }
+      console.error("Content title, type, and lecture notes are required.");
+    }
+  };
+
+  const saveQuizQuestion = () => {
+    if (quizQuestion.question) {
+      setContent({
+        ...content,
+        quizQuestions: [...content.quizQuestions, quizQuestion],
+      });
+      setShowQuizFields(false);
+    } else {
+      console.error("Question is required");
+    }
+  };
 
   const handleEditContent = (index) => {
-    // Retrieve the content at the specified index
     const editedContent = courseData.contents[index];
-  
-    // Update the content state with the retrieved content
+
     setContent({
       title: editedContent.title,
       type: editedContent.type,
@@ -87,20 +137,44 @@ function CreateNewCourse() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send courseData to the server or perform any other action here
-    console.log(courseData);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/courses/", {
+        method: "POST",
+        body: JSON.stringify({
+          ...courseData,
+          contents: courseData.contents.map((content) => ({
+            ...content,
+            quizQuestions: content.quizQuestions.map((question) => question.question),
+          })),
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const json = await response.json();
+        throw new Error(json.message);
+      }
+
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   return (
-    <div className="flex flex-col w-screen h-full top-0">
+    <div className="top-0 flex flex-col w-screen h-full">
       <div className="flex flex-col grow-0">
         <NavBar />
       </div>
-      <div className="mx-auto grow justify-center items-center w-11/12 mt-5 h-full">
-        <section className="bg-white dark:bg-gray-900 px-5 rounded-3xl">
-          <div className="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-            <h2 className="uppercase mb-4 justify-center mx-auto items-center text-xl font-bold text-gray-900 dark:text-white">
+      <div className="items-center justify-center w-11/12 h-full mx-auto mt-5 grow">
+        <section className="px-5 bg-white dark:bg-gray-900 rounded-3xl">
+          <div className="px-4 py-8 mx-auto lg:py-16">
+            <h2 className="items-center justify-center mx-auto mb-4 text-xl font-bold text-gray-900 uppercase dark:text-white">
               Add a new course
             </h2>
             <form onSubmit={handleSubmit}>
@@ -202,7 +276,6 @@ function CreateNewCourse() {
                     <option value="Marketing">Marketing</option>
                     <option value="Photography">Photography</option>
                     <option value="Music">Music</option>
-                    {/* Add more categories as needed */}
                   </select>
                 </div>
                 <div>
@@ -225,24 +298,6 @@ function CreateNewCourse() {
                 </div>
                 <div>
                   <label
-                    htmlFor="instructor"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Instructor
-                  </label>
-                  <input
-                    type="text"
-                    name="instructor"
-                    id="instructor"
-                    value={courseData.instructor}
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Instructor"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
                     htmlFor="tags"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
@@ -258,71 +313,10 @@ function CreateNewCourse() {
                     placeholder="Tags"
                   />
                 </div>
-                 {/* Initial course content fields */}
-              <div className="content-section">
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="initialContentTitle"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Initial Content Title
-                  </label>
-                  <input
-                    type="text"
-                    name="title"
-                    id="initialContentTitle"
-                    value={content.title}
-                    onChange={(e) => setContent({ ...content, title: e.target.value })}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Content Title"
-                    required
-                  />
-                </div>
-                <div>
-                      <label
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Content Type
-                      </label>
-                      <input
-                        type="text"
-                        name="type"
-                        id="initialContentType"
-                        value={content.type}
-                        onChange={(e) => setContent({ ...content, type: e.target.value })}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Content Type"
-                        required
-                      />
-                    </div>
-                    <div className="sm:col-span-2">
-                      <label
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Content Notes
-                      </label>
-                      <textarea
-                        name="lectureNotes"
-                        value={content.lectureNotes}
-                        onChange={(e) => setContent({ ...content, lectureNotes: e.target.value })}
-                        rows="4"
-                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Content Notes"
-                        required
-                      ></textarea>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={saveContent}
-                      className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
-                    >
-                      Save
-                    </button>
-                {/* Other initial content fields */}
               </div>
-                {courseData.contents.map((content, index) => (
-                  <div key={index} className="content-section">
-                     <div className="sm:col-span-2">
+              {courseData.contents.map((content, index) => (
+                <div key={index} className="mt-5 content-section">
+                  <div className="sm:col-span-2">
                     <label
                       htmlFor={`contentTitle${index}`}
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -340,61 +334,200 @@ function CreateNewCourse() {
                       required
                     />
                   </div>
-                    <div>
-                      <label
-                        htmlFor={`contentType${index}`}
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Content Type
-                      </label>
-                      <input
-                        type="text"
-                        name="type"
-                        id={`contentType${index}`}
-                        value={content.type}
-                        onChange={(e) => handleContentChange(e, index)}
-                        data-index={index}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Content Type"
-                        required
-                      />
-                    </div>
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor={`contentNotes${index}`}
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                      >
-                        Content Notes
-                      </label>
-                      <textarea
-                        id={`contentNotes${index}`}
-                        name="lectureNotes"
-                        value={content.lectureNotes}
-                        onChange={(e) => handleContentChange(e, index)}
-                        data-index={index}
-                        rows="4"
-                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Content Notes"
-                        required
-                      ></textarea>
-                    </div>
+                  <div>
+                    <label
+                      htmlFor={`contentType${index}`}
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Content Type
+                    </label>
+                    <input
+                      type="text"
+                      name="type"
+                      id={`contentType${index}`}
+                      value={content.type}
+                      onChange={(e) => handleContentChange(e, index)}
+                      data-index={index}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Content Type"
+                      required
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor={`contentNotes${index}`}
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Content Notes
+                    </label>
+                    <textarea
+                      id={`contentNotes${index}`}
+                      name="lectureNotes"
+                      value={content.lectureNotes}
+                      onChange={(e) => handleContentChange(e, index)}
+                      data-index={index}
+                      rows="4"
+                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Content Notes"
+                      required
+                    ></textarea>
+                    {content.quizQuestions.map((question, qIndex) => (
+                      <div key={qIndex} className="mt-5 quiz-question-section">
+                        <label
+                          htmlFor={`quizQuestion${qIndex}`}
+                          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >
+                          Quiz Question {qIndex + 1}
+                        </label>
+                        <textarea
+                          id={`quizQuestion${qIndex}`}
+                          name={`quizQuestion${qIndex}`}
+                          value={question.question}
+                          onChange={(e) => {
+                            const updatedQuestions = [...content.quizQuestions];
+                            updatedQuestions[qIndex] = {
+                              ...updatedQuestions[qIndex],
+                              question: e.target.value,
+                            };
+                            setContent({
+                              ...content,
+                              quizQuestions: updatedQuestions,
+                            });
+                          }}
+                          rows="4"
+                          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                          placeholder="Quiz Question"
+                          required
+                        ></textarea>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleRemoveQuizQuestion(index, qIndex)
+                          }
+                          className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
+                        >
+                          Remove Quiz Question
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleEditContent(index)}
+                    className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveContent(index)}
+                    className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              {showContentFields && (
+                <div className="content-section">
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="initialContentTitle"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Content Title
+                    </label>
+                    <input
+                      type="text"
+                      name="title"
+                      id="initialContentTitle"
+                      value={content.title}
+                      onChange={(e) =>
+                        setContent({ ...content, title: e.target.value })
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Content Title"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Content Type
+                    </label>
+                    <input
+                      type="text"
+                      name="type"
+                      id="initialContentType"
+                      value={content.type}
+                      onChange={(e) =>
+                        setContent({ ...content, type: e.target.value })
+                      }
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Content Type"
+                      required
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                      Content Notes
+                    </label>
+                    <textarea
+                      name="lectureNotes"
+                      value={content.lectureNotes}
+                      onChange={(e) =>
+                        setContent({ ...content, lectureNotes: e.target.value })
+                      }
+                      rows="4"
+                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Content Notes"
+                      required
+                    ></textarea>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label
+                      htmlFor="quize_Question"
+                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Quize Question
+                    </label>
+                    <textarea
+                      id="quize_Question"
+                      name="quize_Question"
+                      value={quizQuestion.question}
+                      onChange={(e) =>
+                        setQuizQuestion({
+                          ...quizQuestion,
+                          question: e.target.value,
+                        })
+                      }
+                      rows="4"
+                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                      placeholder="Description"
+                      required
+                    ></textarea>
                     <button
                       type="button"
-                      onClick={() => handleEditContent(index)}
+                      onClick={saveQuizQuestion}
                       className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
                     >
-                      Edit
+                      Save
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleRemoveContent(index)}
-                      className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
+                      onClick={handleAddQuizQuestion}
+                      className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
                     >
-                      Remove
+                      Add Quiz Question
                     </button>
                   </div>
-                ))}
-              </div>
+                  <button
+                    type="button"
+                    onClick={saveContent}
+                    className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
+                  >
+                    Save
+                  </button>
+                </div>
+              )}
               <button
                 type="button"
                 onClick={handleAddContent}

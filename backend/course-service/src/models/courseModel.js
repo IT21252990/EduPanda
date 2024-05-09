@@ -16,7 +16,7 @@ const courseSchema = new mongoose.Schema({
     category: { type: String, required: true },
     duration: { type: Number, required: true },
     instructor: { type: mongoose.Schema.Types.ObjectId, ref: 'Instructor', required: true },
-    status: { type: String, enum: ['Pending', 'Published'], default: 'Pending' , required: true },
+    status: { type: String, enum: ['Pending', 'Published' , 'Rejected' ], default: 'Pending' , required: true },
     Updated: { type: Boolean , default: false , required: true},
     enrolledStudents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
     contents: [contentSchema],
