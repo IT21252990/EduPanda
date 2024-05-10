@@ -25,6 +25,9 @@ import CreateNewCourse from './pages/instructor/CreateNewCourse';
 //Learner
 import LearnerDashboard from './pages/learner/LearnerDashboard'
 import MyCourses from './pages/learner/MyCourses'
+import LearnerHome from './pages/learner/Home'
+import Success from './pages/learner/Success'
+import Cancel from './pages/learner/Cancel'
 
 
 function App() {
@@ -57,6 +60,9 @@ function App() {
           {/* learner */}
           <Route path="/LearnerDashboard" element={<LearnerDashboard />} />
           <Route path="/MyCourses" element={<MyCourses />} />
+          <Route path="/Home" element={<LearnerHome />} />
+          <Route path="/Success" element={<Success />} />
+          <Route path="/Cancel" element={<Cancel />} />
 
         </Routes>
       </BrowserRouter>
