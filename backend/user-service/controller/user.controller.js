@@ -136,7 +136,7 @@ exports.loginUser = async (req, res) => {
   }
 
   // Check if password is correct
-  const passwordIsCorrect = await bcrypt.compare(password, user.password);
+  // const passwordIsCorrect = await bcrypt.compare(password, user.password);
   
   if (password=== user.password) {
     
@@ -275,7 +275,7 @@ exports.forgotPassword = async (req, res) => {
   
     if (!user) {
       res.status(404);
-      res.json("User does not exist");
+      res.status(200).json({success: true, message: "User does not exist"});
     }
 
     // Delete token if it exists in DB
@@ -301,10 +301,10 @@ exports.forgotPassword = async (req, res) => {
       createdAt: Date.now(),
       expiresAt: Date.now() + 40 * (60 * 1000), // fourty minutes
     }).save();
-  
+   
     // Construct Reset Url
-    const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
-  
+    const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${hashedToken}`;
+
     // Reset Email
     const message = `
         <h2>Hello ${user.name}</h2>
@@ -321,18 +321,17 @@ exports.forgotPassword = async (req, res) => {
     const sent_from = process.env.EMAIL_USER;
   
     try {
-        const sent = await sendEmail(subject, message, send_to, sent_from);
-        if(sent){
-          res.status(200).json({ success: true, message: "Reset Email Sent" });
-        }else{
-          res.status(200).json({ success: false, message: "Email not Sent. error"});
-        }
-      } catch (error) {
-        res.status(500);
-        // res.json("Email not sent, please try again");
-        res.status(200).json({ success: false, message: "Email not Sent. error" , error});
-        console.log(error)
-      }   
+      sendEmail(subject, message, send_to, sent_from, null, (sent) => {
+          if (sent) {
+              res.status(200).json({ success: true, message: "Reset Email Sent" });
+          } else {
+              res.status(200).json({ success: false, message: "Email not Sent" });
+          }
+      });
+  } catch (error) {
+      res.status(500).json({ success: false, message: "Email not Sent. Error", error });
+      console.log(error);
+  }
   };
 
 
@@ -346,19 +345,22 @@ exports.resetPassword = async (req, res) => {
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
-  
+
+
     // fIND tOKEN in DB
     const userToken = await Token.findOne({
-      token: hashedToken,
+      token: resetToken,
       expiresAt: { $gt: Date.now() },
     });
   
+    
     if (!userToken) {
       res.status(404);
       res.json("Invalid or Expired Token");
     }
-
+    
     // Find user
+    
     const user = await User.findOne({ _id: userToken.userId });
     user.password = password;
     await user.save();
@@ -366,8 +368,6 @@ exports.resetPassword = async (req, res) => {
       message: "Password Reset Successful, Please Login",
     });
   };
-
-
 
 
 

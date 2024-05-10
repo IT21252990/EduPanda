@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import AdNavbar from "../../../components/admin/AdNavBar";
 import AdSidebar from "../../../components/admin/AdSideBar";
+import './usermanage.css'
 
 const MyAccount = () => {
   const [passwordformData, setpasswordFormData] = useState({

@@ -14,7 +14,6 @@ router.patch("/changepassword", UserController.verifyToken, UserController.chang
 router.post("/forgotpassword", UserController.forgotPassword);
 router.put("/resetpassword/:resetToken", UserController.resetPassword);
 
-
 // router.get("/loggedin", loginStatus);
 // router.get("/all", getAllUsers); // This will handle GET requests to /api/users/all
 // router.patch("/updateuser", protect, updateUser);
