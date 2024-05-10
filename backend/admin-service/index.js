@@ -21,7 +21,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
 
-const port = process.env.PORT || 5005;
+const port = process.env.PORT || 5001;
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

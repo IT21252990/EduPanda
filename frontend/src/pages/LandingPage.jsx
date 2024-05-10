@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../public/edupanda.png'
+import logo from '/edupanda.png'
 import { Link } from "react-router-dom";
 
 

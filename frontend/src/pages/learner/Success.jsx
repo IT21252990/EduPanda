@@ -1,8 +1,65 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../../components/learner/NavBar";
 import { useNavigate } from "react-router-dom";
 
 function Success() {
+
+  useEffect(() => {
+    const sendEmail = async () => {
+      const emailData = {
+        to: `ashensavindagunasekara@gmail.com`,
+        subject: "Course Approved",
+        text: `The course has been purchased.`
+      };
+      
+      console.log(JSON.stringify(emailData));
+      const emailResponse = await fetch(
+        "http://localhost:3000/send-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(emailData)
+        }
+      );
+  
+  
+      if (!emailResponse.ok) {
+        const errorText = await emailResponse.text();
+        throw new Error(`Failed to send email: ${errorText}`);
+      }
+    };
+
+    const sendSMS = async () => {
+      const smsData = {
+        to: '+94720706833',
+        text: 'The course has been purchased.'
+      };
+  
+      console.log(JSON.stringify(smsData));
+      const smsResponse = await fetch(
+        "http://localhost:3001/send-sms",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(smsData)
+        }
+      );
+  
+  
+      if (!smsResponse.ok) {
+        const errorText = await smsResponse.text();
+        throw new Error(`Failed to send sms: ${errorText}`);
+      }
+    };
+  
+    sendEmail();
+    // sendSMS();
+  }, []);
+
 
 
   const navigate = useNavigate();
