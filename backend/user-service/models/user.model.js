@@ -27,10 +27,9 @@ const userSchema = mongoose.Schema(
       role: {
         type: String,
         required: true,
-        enum: ['admin', 'learner', 'Instructor'], // This restricts the values to either 'admin' or 'user'
+        enum: ['admin', 'learner', 'instructor'], // This restricts the values to either 'admin' or 'user'
         default: 'learner' // Default to 'user' if not specified
       },
-
       photo: {
         type: String,
         // required: [true, "Please add a photo"],
@@ -38,7 +37,8 @@ const userSchema = mongoose.Schema(
       },
       phone: {
         type: String,
-        default: "+94 ",
+        // default: "+94 ",
+        required: [true, "Please add a phone number"],
       },
       bio: {  
         type: String,
@@ -60,17 +60,17 @@ const userSchema = mongoose.Schema(
     
 )
 
-//   Encrypt password before saving to DB
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    return next();
-  }
-  // Hash password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(this.password, salt);
-  this.password = hashedPassword;
-  next();
-});
+// //   Encrypt password before saving to DB
+// userSchema.pre("save", async function (next) {
+//   if (!this.isModified("password")) {
+//     return next();
+//   }
+//   // Hash password
+//   const salt = await bcrypt.genSalt(10);
+//   const hashedPassword = await bcrypt.hash(this.password, salt);
+//   this.password = hashedPassword;
+//   next();
+// });
 
 
 const User = mongoose.model("User", userSchema);

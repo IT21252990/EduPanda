@@ -75,12 +75,13 @@ button.w-full.text-white.bg-primary-600.hover\:bg-primary-700.focus\:ring-4.focu
 }
 .relative.bg-white.rounded-lg.overflow-hidden.max-w-md.p-6.mx-4 {
   width: 1000px;
+  background-color: #1f2937;
 }
 textarea#bio {
   height: 131px;
 }
 h2.updateprofile {
-  color: #374151;
+  color: #ffffff;
   font-weight: 800;
   text-align: center;
 }

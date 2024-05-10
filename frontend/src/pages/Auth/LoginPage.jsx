@@ -52,7 +52,7 @@ const Login = () => {
         navigate("/instructor_home");
       }
       else if(data.role === 'learner') {
-        navigate("/");
+        navigate("/home");
       }
 
       if (response.ok) {

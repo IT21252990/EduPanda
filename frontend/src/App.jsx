@@ -26,6 +26,7 @@ import CreateNewCourse from './pages/instructor/CreateNewCourse';
 import Login from './pages/Auth/LoginPage';
 import Register from './pages/Auth/RegisterPage';
 import MyProfile from './pages/Myprofile/MyProfile';
+import ResetPassword from './pages/Auth/ResetPassword';
 
 
 function App() {
@@ -41,6 +42,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />
+
 
           {/* admin */}
           <Route path="/AdminHome" element={<AdminHome />} />
