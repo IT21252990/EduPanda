@@ -10,6 +10,19 @@ function NavBar() {
     setSidebarOpen(!sidebarOpen);
   };
   
+  const handleLogout = async () => {
+    try {
+      await axios.get('http://localhost:5002/api/users/logout');
+      // Clear token from localStorage
+      localStorage.removeItem('token');
+      // Redirect the user to the home page or any other desired destination
+      window.location.href = '/'; // Redirect to the home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
+  
   return (
     <div>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
