@@ -25,10 +25,10 @@ import Profile from './pages/instructor/Profile';
 import CreateNewCourse from './pages/instructor/CreateNewCourse';
 import Login from './pages/Auth/LoginPage';
 import Register from './pages/Auth/RegisterPage';
-import MyProfile from './pages/Myprofile/MyProfile';
+import MyProfile from './pages/admin/Myprofile/MyProfile';
 import ResetPassword from './pages/Auth/ResetPassword';
 import ForgotPassword from './pages/Auth/ForgotPassword';
-
+import InstructorMyProfile from './pages/instructor/Myprofile/InstructorMyProfile';
 
 function App() {
 
@@ -43,6 +43,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/instructor_profile" element={<InstructorMyProfile />} />
           <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
 
@@ -63,8 +64,6 @@ function App() {
           <Route path="/feedback_and_reviews" element={<FeedbackAndReviews />} />
           <Route path="/instructor_profile" element={<Profile />} />
           <Route path="/create_new_course" element={<CreateNewCourse />} />
-
-          
           
         </Routes>
       </BrowserRouter>

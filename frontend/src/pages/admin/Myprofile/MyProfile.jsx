@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Button } from "flowbite-react";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import AdNavbar from "../../components/admin/AdNavBar";
-import AdSidebar from "../../components/admin/AdSideBar";
+import AdNavbar from "../../../components/admin/AdNavBar";
+import AdSidebar from "../../../components/admin/AdSideBar";
 
 const MyAccount = () => {
   const [passwordformData, setpasswordFormData] = useState({
