@@ -38,11 +38,11 @@ const userSchema = mongoose.Schema(
       },
       phone: {
         type: String,
-        default: "+94",
+        default: "+94 ",
       },
-      bio: {
+      bio: {  
         type: String,
-        maxLength: [250, "Bio must not be more than 250 characters"],
+        maxLength: [550, "Bio must not be more than 250 characters"],
         default: "bio",
       },
       isAdmin: {
