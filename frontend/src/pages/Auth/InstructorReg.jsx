@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import { Link, useNavigate } from "react-router-dom";
 
-const Register = () => {
+const InstructorReg = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -28,7 +28,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5002/api/users/register', {
+      const response = await fetch('http://localhost:5002/api/users/register/instructor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -56,19 +56,16 @@ const Register = () => {
 
   return (
 <div className='login'>
-
   <section className="bg-gray-50 dark:bg-gray-900 reg">
-    
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-            Create an account for Learners
+            Create an account for Instructors
           </h1>
       <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
         {/* <img className="w-8 h-8 mr-2" src={logo} alt="logo"/> */}
       </a>
       <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          
           <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
             <div className="flex flex-wrap -mx-3">
               <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -116,4 +113,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default InstructorReg;

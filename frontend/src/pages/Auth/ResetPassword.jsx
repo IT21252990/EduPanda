@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import logo from "./logo.png";
 
+
 const ResetPassword = () => {
+    const navigate = useNavigate();
+
   const { resetToken } = useParams(); // Retrieve resetToken from URL params
   const [formData, setFormData] = useState({
     newPassword: '',

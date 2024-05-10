@@ -29,6 +29,7 @@ import MyProfile from './pages/admin/Myprofile/MyProfile';
 import ResetPassword from './pages/Auth/ResetPassword';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import InstructorMyProfile from './pages/instructor/Myprofile/InstructorMyProfile';
+import InstructorReg from './pages/Auth/InstructorReg';
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/instructor/register" element={<InstructorReg />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/instructor_profile" element={<InstructorMyProfile />} />
           <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />

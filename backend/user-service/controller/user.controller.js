@@ -63,14 +63,47 @@ exports.registerrUser = async (req, res) => {
       }
   
       // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10); // Use bcrypt to hash the password
+      // const hashedPassword = await bcrypt.hash(password, 10); // Use bcrypt to hash the password
   
       // Create new user with hashed password
       user = new User({
           name,
           email,
-          password: hashedPassword,// Store the hashed password in the database
+          password,//: hashedPassword,// Store the hashed password in the database
           phone
+      });
+  
+      await user.save();
+  
+      res.status(201).json({ success: true , message: 'User registered successfully' });
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+  }
+};
+
+exports.registerrInstructor = async (req, res) => {
+  const { name, email, password, phone } = req.body;
+
+  try {
+      // Check if user already exists
+      let user = await User.findOne({ email });
+  
+      if (user) {
+          return res.status(400).json({ success: false, message: 'User already exists' });
+      }
+  
+      // Hash the password
+      // const hashedPassword = await bcrypt.hash(password, 10); // Use bcrypt to hash the password
+  
+      // Create new user with hashed password
+      user = new User({
+          name,
+          email,
+          password, //: hashedPassword,// Store the hashed password in the database
+          phone,
+          role: 'instructor',
+          isInstructor: true
       });
   
       await user.save();
@@ -105,7 +138,7 @@ exports.loginUser = async (req, res) => {
   // Check if password is correct
   const passwordIsCorrect = await bcrypt.compare(password, user.password);
   
-  if (passwordIsCorrect) {
+  if (password=== user.password) {
     
   // Generate Token
   const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
@@ -187,38 +220,41 @@ exports.updateUser = async (req, res) => {
   };
 
 //reset password
+
 exports.changePassword = async (req, res) => {
+  const user = await User.findById(req.user.id);
+  const { oldPassword, password } = req.body;
 
-    const user = await User.findById(req.user.id);
-    const { oldPassword, password } = req.body;
-  
-    if (!user) {
-      res.status(400);
-      return res.status(400).json({ success: false, message: "User not found, please signup" });
-      // res.json("User not found, please signup");
+  if (!user) {
+    res.status(400);
+    return res.status(400).json({ success: false, message: "User not found, please signup" });
+  }
 
-    }
-    //Validate
-    if (!oldPassword || !password) {
-      res.status(400);
-      return res.status(400).json({ success: false, message: "Please add old and new password" });
-      // res.json("Please add old and new password");
-    }
-  
-    // check if old password matches password in DB
-    const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
-  
-    // Save new password
-    if (user && passwordIsCorrect) {
+  // Validate
+  if (!oldPassword || !password) {
+    res.status(400);
+    return res.status(400).json({ success: false, message: "Please add old and new password" });
+  }
+
+  // Check if old password matches password in DB
+  // const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
+
+  // Save new password
+  if (oldPassword=== user.password) {
+    // Hash the new password
+    // const hashedPassword = await bcrypt.hash(password, 10); // 10 is the saltRounds
+
+    // Store the hashed password
+    // user.password = hashedPassword;
       user.password = password;
-      await user.save();
-      res.status(200).send("Password change successful");
-    } else {
-      res.status(400);
-      // res.json("Old password is incorrect");
-      res.status(200).send("Old password is incorrect");
-    }
-  };
+    await user.save();
+    return res.status(200).send("Password change successful");
+  } else {
+    res.status(400);
+    return res.status(200).send("Old password is incorrect");
+  }
+};
+
 
 // Logout User
 exports.logout = async (req, res) => {
@@ -289,7 +325,7 @@ exports.forgotPassword = async (req, res) => {
         if(sent){
           res.status(200).json({ success: true, message: "Reset Email Sent" });
         }else{
-          res.status(200).json({ success: false, message: "Email not Sent. error" , error});
+          res.status(200).json({ success: false, message: "Email not Sent. error"});
         }
       } catch (error) {
         res.status(500);

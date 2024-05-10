@@ -158,11 +158,24 @@ h2.land-name {
   font-size: 85px;
   text-align: center;
   font-weight: 800;
-  padding-top: 15px;
+  margin-top: -250px;
   /* color: #111827; */
 }
 button.bg-blue-500.hover\:bg-blue-600.text-white.py-2.px-4.rounded {
   margin-top: 16px;
+}
+a {
+  margin-right: 15px;
+}
+button.log:hover {
+  background-color: rgb(245, 244, 244);
+  color:#000000;
+}
+button.log {
+  background-color: white;
+  color: #000000;
+  padding: 10px 20px;
+  border-radius: 6px;
 }
 
 /* forgot password */

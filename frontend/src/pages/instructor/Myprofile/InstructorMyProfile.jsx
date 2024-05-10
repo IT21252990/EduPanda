@@ -125,7 +125,7 @@ const InstructorMyProfile = () => {
             'Content-Type': 'application/json'
           }
         });
-        
+       
         setUser(responseUpdate.data);
         setShowUpdateForm(false);
         toast.success('User details updated successfully');
@@ -138,7 +138,7 @@ const InstructorMyProfile = () => {
 
 
   return (
-    <div>
+    <div className="flex flex-col w-screen h-full top-0">
      <div className="flex flex-col grow-0">
         <NavBar />
       </div>
