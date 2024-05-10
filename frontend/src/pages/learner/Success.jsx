@@ -31,30 +31,30 @@ function Success() {
     //   }
     // };
 
-    const sendSMS = async () => {
-      const smsData = {
-        to: '+94720706833',
-        text: 'The course has been purchased.'
-      };
+    // const sendSMS = async () => {
+    //   const smsData = {
+    //     to: '+94720706833',
+    //     text: 'The course has been purchased.'
+    //   };
   
-      console.log(JSON.stringify(smsData));
-      const smsResponse = await fetch(
-        "http://localhost:3001/send-sms",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(smsData)
-        }
-      );
+    //   console.log(JSON.stringify(smsData));
+    //   const smsResponse = await fetch(
+    //     "http://localhost:3001/send-sms",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json"
+    //       },
+    //       body: JSON.stringify(smsData)
+    //     }
+    //   );
   
   
-      if (!smsResponse.ok) {
-        const errorText = await smsResponse.text();
-        throw new Error(`Failed to send sms: ${errorText}`);
-      }
-    };
+    //   if (!smsResponse.ok) {
+    //     const errorText = await smsResponse.text();
+    //     throw new Error(`Failed to send sms: ${errorText}`);
+    //   }
+    // };
   
     // sendEmail();
     // sendSMS();

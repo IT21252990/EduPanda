@@ -61,6 +61,31 @@ sendEmail = async (body) => {
     }
   };
 
+  const sendSMS = async (body) => {
+    const smsData = {
+      to: '+94720706833',
+      text: `The course ${body.courseTitle} has been purchased.`
+    };
+
+    console.log(JSON.stringify(smsData));
+    const smsResponse = await fetch(
+      "http://localhost:3001/send-sms",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(smsData)
+      }
+    );
+
+
+    if (!smsResponse.ok) {
+      const errorText = await smsResponse.text();
+      throw new Error(`Failed to send sms: ${errorText}`);
+    }
+  };
+
 
 
 
@@ -85,6 +110,7 @@ const handleCheckoutSuccess = async (customer, data) => {
     try {
         const savedOrder = await newEnrollment.save();
         sendEmail(emailBody);
+        sendSMS(emailBody);
 
         console.log("SavedOrder", savedOrder);
     } catch (error) {
