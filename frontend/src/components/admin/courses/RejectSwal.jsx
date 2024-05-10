@@ -42,7 +42,7 @@ export default async function RejectSwal(courseId, courseName, instructorEmail) 
       };
 
       const emailResponse = await fetch(
-        "http://localhost:3000/send-email", // Change the URL to your backend endpoint
+        "http://localhost:9123/send-email", // Change the URL to your backend endpoint
         {
           method: "POST",
           headers: {
