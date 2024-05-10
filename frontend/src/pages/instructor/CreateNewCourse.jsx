@@ -39,6 +39,15 @@ function CreateNewCourse() {
     });
   };
 
+  const handleTagsChange = (e) => {
+    const tagsString = e.target.value;
+    const tagsArray = tagsString.split(",").map((tag) => tag.trim());
+    setCourseData((prevData) => ({
+      ...prevData,
+      tags: tagsArray,
+    }));
+  };
+
   const handleContentChange = (e, index) => {
     const { name, value } = e.target;
     const updatedContents = [...courseData.contents];
@@ -307,8 +316,10 @@ function CreateNewCourse() {
                     type="text"
                     name="tags"
                     id="tags"
-                    value={courseData.tags}
-                    onChange={handleChange}
+                    // value={courseData.tags}
+                    value={courseData.tags.join(", ")}
+                    onChange={handleTagsChange}
+                    // onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Tags"
                   />
@@ -334,7 +345,7 @@ function CreateNewCourse() {
                       required
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label
                       htmlFor={`contentType${index}`}
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -352,7 +363,32 @@ function CreateNewCourse() {
                       placeholder="Content Type"
                       required
                     />
-                  </div>
+                  </div> */}
+                  {/*  */}
+                  <div>
+                  <label
+                    htmlFor="level"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                     Content Type
+                  </label>
+                  <select
+                    name="level"
+                    id={`contentType${index}`}
+                    value={content.type}
+                    onChange={(e) => handleContentChange(e, index)}
+                      data-index={index}
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    required
+                  >
+                    <option value="">Select Content Type</option>
+                    <option value="Lecture">Lecture</option>
+                    <option value="Video">Video</option>
+                    <option value="Quiz">Quiz</option>
+                    <option value="Project">Project</option>
+                  </select>
+                </div>
+                  {/*  */}
                   <div className="sm:col-span-2">
                     <label
                       htmlFor={`contentNotes${index}`}
@@ -449,7 +485,33 @@ function CreateNewCourse() {
                       required
                     />
                   </div>
+                  {/*  */}
                   <div>
+                  <label
+                    htmlFor="level"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                     Content Type
+                  </label>
+                  <select
+                    id="level"
+                    name="level"
+                    value={content.type}
+                    onChange={(e) =>
+                      setContent({ ...content, type: e.target.value })
+                    }
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    required
+                  >
+                    <option value="">Select Content Type</option>
+                    <option value="Lecture">Lecture</option>
+                    <option value="Video">Video</option>
+                    <option value="Quiz">Quiz</option>
+                    <option value="Project">Project</option>
+                  </select>
+                </div>
+                {/*  */}
+                  {/* <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Content Type
                     </label>
@@ -465,7 +527,7 @@ function CreateNewCourse() {
                       placeholder="Content Type"
                       required
                     />
-                  </div>
+                  </div> */}
                   <div className="sm:col-span-2">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                       Content Notes
