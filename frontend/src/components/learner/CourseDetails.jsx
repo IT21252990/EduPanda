@@ -27,16 +27,16 @@ const CourseDetails = ({ course }) => {
     }, [course]);
 
     return (
-        <div className="course-details">
+        <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-8">
             {courseDetails && (
-                <>
-                    <h4>{courseDetails.title}</h4>
-                    <p><strong>Description: </strong>{courseDetails.description}</p>
-                    <p><strong>Price: </strong>${courseDetails.price}</p>
-                    <p><strong>Level: </strong>{courseDetails.level}</p>
-                    <p><strong>Duration: </strong>{courseDetails.duration} hours</p>
-                    <p><strong>Tags: </strong>{courseDetails.tags.join(', ')}</p>
-                </>
+                <div className="p-4">
+                    <h2 className="text-xl text-gray-700 mb-3 font-semibold">{courseDetails.title}</h2>
+                    <p className="text-gray-700"><strong>Description: </strong>{courseDetails.description}</p>
+                    <p className="text-gray-700"><strong>Price: </strong>${courseDetails.price}</p>
+                    <p className="text-gray-700"><strong>Level: </strong>{courseDetails.level}</p>
+                    <p className="text-gray-700"><strong>Duration: </strong>{courseDetails.duration} hours</p>
+                    <p className="text-gray-700"><strong>Tags: </strong>{courseDetails.tags.join(', ')}</p>
+                </div>
             )}
         </div>
     );
