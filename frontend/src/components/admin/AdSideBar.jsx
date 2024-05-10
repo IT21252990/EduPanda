@@ -53,9 +53,9 @@ export default function AdSidebar() {
                   viewBox="0 0 18 21"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M11 4.717c-2.286-.58-4.16-.756-7.045-.71A1.99 1.99 0 0 0 2 6v11c0 1.133.934 2.022 2.044 2.007 2.759-.038 4.5.16 6.956.791V4.717Zm2 15.081c2.456-.631 4.198-.829 6.956-.791A2.013 2.013 0 0 0 22 16.999V6a1.99 1.99 0 0 0-1.955-1.993c-2.885-.046-4.76.13-7.045.71v15.081Z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                 </svg>
 
@@ -71,17 +71,18 @@ export default function AdSidebar() {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="m1 1 4 4 4-4"
                   />
                 </svg>
               </button>
               <ul
                 id="dropdown-example"
-                className={`${isDropdownOpen ? "block" : "hidden"
-                  } py-2 space-y-2`}
+                className={`${
+                  isDropdownOpen ? "block" : "hidden"
+                } py-2 space-y-2`}
               >
                 <li>
                   <a
@@ -141,14 +142,14 @@ export default function AdSidebar() {
                   viewBox="0 0 20 20"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M7 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2v-4a3 3 0 0 0-3-3H7V6Z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M2 11a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7Zm7.5 1a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   />
                   <path d="M10.5 14.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />{" "}
                 </svg>
@@ -171,9 +172,9 @@ export default function AdSidebar() {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M3 15v4m6-6v6m6-4v4m6-6v6M3 11l6-5 6 5 5.5-5.5"
                   />
                 </svg>
