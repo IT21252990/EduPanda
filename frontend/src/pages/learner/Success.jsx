@@ -57,7 +57,7 @@ function Success() {
     };
   
     sendEmail();
-    sendSMS();
+    // sendSMS();
   }, []);
 
 
