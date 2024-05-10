@@ -34,7 +34,7 @@ router.delete('/:id', deleteEnroll);
 //////
 let endpointSecret;
 
-// endpointSecret = "whsec_ffa03cda8e6f6ce68ef70aae86e6dc3e91ec00e970b8b9dc7dc69b99118eb904";
+
 
 
 // Success handler for Stripe checkout session
