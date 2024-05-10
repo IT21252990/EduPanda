@@ -42,7 +42,7 @@ const Register = () => {
       if (response.ok) {
         console.log(data); // Handle response data accordingly
         // Redirect or show success message
-        navigate("/");
+        navigate("/login");
         return toast.success("Registration successful");
       } else {
         console.error('Error:', data.error);

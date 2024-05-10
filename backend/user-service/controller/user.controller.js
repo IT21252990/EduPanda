@@ -285,8 +285,12 @@ exports.forgotPassword = async (req, res) => {
     const sent_from = process.env.EMAIL_USER;
   
     try {
-        await sendEmail(subject, message, send_to, sent_from);
-        res.status(200).json({ success: true, message: "Reset Email Sent" });
+        const sent = await sendEmail(subject, message, send_to, sent_from);
+        if(sent){
+          res.status(200).json({ success: true, message: "Reset Email Sent" });
+        }else{
+          res.status(200).json({ success: false, message: "Email not Sent. error" , error});
+        }
       } catch (error) {
         res.status(500);
         // res.json("Email not sent, please try again");
@@ -317,16 +321,15 @@ exports.resetPassword = async (req, res) => {
       res.status(404);
       res.json("Invalid or Expired Token");
     }
-  
+
     // Find user
-    const user = await User.findOne({ id: userToken.userId });
+    const user = await User.findOne({ _id: userToken.userId });
     user.password = password;
     await user.save();
     res.status(200).json({
       message: "Password Reset Successful, Please Login",
     });
   };
-
 
 
 

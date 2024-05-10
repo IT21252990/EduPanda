@@ -164,3 +164,32 @@ h2.land-name {
 button.bg-blue-500.hover\:bg-blue-600.text-white.py-2.px-4.rounded {
   margin-top: 16px;
 }
+
+/* forgot password */
+.forgot {
+  background-color: #1f2937;
+  margin-top: 100px;
+  padding: 74px;
+  border-radius: 12px;
+}
+h1.forgot-h {
+  font-size: 27px;
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+p.forgot-p {
+  padding-bottom: 30px;
+}
+.mx-auto {
+  /* margin-left: auto; */
+  margin-right: auto;
+}
+a.back-login {
+  color: #3f83f8;
+}
+a.back-login:hover {
+  color: #2966ce;
+}
+.max-w-sm {
+  margin-bottom: 21px;
+}

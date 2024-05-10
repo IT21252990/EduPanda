@@ -27,6 +27,7 @@ import Login from './pages/Auth/LoginPage';
 import Register from './pages/Auth/RegisterPage';
 import MyProfile from './pages/Myprofile/MyProfile';
 import ResetPassword from './pages/Auth/ResetPassword';
+import ForgotPassword from './pages/Auth/ForgotPassword';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
 
 
           {/* admin */}
