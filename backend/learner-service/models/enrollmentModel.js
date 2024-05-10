@@ -11,8 +11,16 @@ const EnrollmentSchema = new Schema({
     cid: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
+    },
+    payment:{
+        type: String,
+        required: true
+    },
+    paymentType:{
+        type: String,
+        required: true
     }
-})
+},{timestamps: true})
 
 module.exports = mongoose.model('Enrollment', EnrollmentSchema)
 

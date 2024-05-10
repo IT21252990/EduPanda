@@ -5,31 +5,31 @@ import { useNavigate } from "react-router-dom";
 function Success() {
 
   useEffect(() => {
-    const sendEmail = async () => {
-      const emailData = {
-        to: `ashensavindagunasekara@gmail.com`,
-        subject: "Course Approved",
-        text: `The course has been purchased.`
-      };
+    // const sendEmail = async () => {
+    //   const emailData = {
+    //     to: `ashensavindagunasekara@gmail.com`,
+    //     subject: "Course Approved",
+    //     text: `The course has been purchased.`
+    //   };
       
-      console.log(JSON.stringify(emailData));
-      const emailResponse = await fetch(
-        "http://localhost:3000/send-email",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(emailData)
-        }
-      );
+    //   console.log(JSON.stringify(emailData));
+    //   const emailResponse = await fetch(
+    //     "http://localhost:3000/send-email",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json"
+    //       },
+    //       body: JSON.stringify(emailData)
+    //     }
+    //   );
   
   
-      if (!emailResponse.ok) {
-        const errorText = await emailResponse.text();
-        throw new Error(`Failed to send email: ${errorText}`);
-      }
-    };
+    //   if (!emailResponse.ok) {
+    //     const errorText = await emailResponse.text();
+    //     throw new Error(`Failed to send email: ${errorText}`);
+    //   }
+    // };
 
     const sendSMS = async () => {
       const smsData = {
@@ -56,7 +56,7 @@ function Success() {
       }
     };
   
-    sendEmail();
+    // sendEmail();
     // sendSMS();
   }, []);
 
