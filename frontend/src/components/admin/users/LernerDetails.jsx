@@ -23,39 +23,43 @@ export default function LearnerDetails() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchAllCourses = async () => {
-      const courses = {};
-      for (const learner of learners) {
-        try {
-          const response = await fetch(`http://localhost:5001/api/courses/learner/${learner._id}`);
-          if (!response.ok) {
-            throw new Error("Failed to fetch courses for learner");
-          }
-          const data = await response.json();
-          courses[learner._id] = data;
-        } catch (error) {
-          console.error(error.message);
-          courses[learner._id] = [];
-        }
+  const fetchCoursesForLearner = async (learnerId) => {
+    try {
+      const response = await fetch(`http://localhost:5001/api/enrollments/userEnrollments/${learnerId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch courses for learner");
       }
-      setLearnerCourses(courses);
-    };
+      const data = await response.json();
+      return data; // assuming the response contains an array of courses
+    } catch (error) {
+      console.error(error.message);
+      return [];
+    }
+  };
 
-    fetchAllCourses();
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const coursesData = {};
+      for (const learner of learners) {
+        const courses = await fetchCoursesForLearner(learner._id);
+        coursesData[learner._id] = courses;
+      }
+      setLearnerCourses(coursesData);
+    };
+    fetchCourses();
   }, [learners]);
 
   if (loading) {
-    return <div>Loading...</div>; // You can replace this with a loading spinner or any other loading indicator
+    return <div>Loading...</div>;
   }
 
   if (learners.length === 0) {
-    return <div>No learners found.</div>; // You can replace this with a message indicating no learners are available
+    return <div>No learners found.</div>;
   }
 
   return (
-    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-2 dark:border-gray-600 ">
-      <tbody className="">
+    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border-2 dark:border-gray-600">
+      <tbody>
         {learners.map((learner, index) => (
           <tr key={index} className="bg-white border-b dark:bg-gray-700 dark:border-gray-600 dark:hover:bg-opacity-45">
             <th
@@ -68,32 +72,18 @@ export default function LearnerDetails() {
               <div className="flex items-center gap-5">
                 <img
                   className="w-10 h-10 rounded-full"
-                  src={learner.photo} // Assuming the API returns a photo URL
+                  src={learner.photo}
                   alt=""
                 />
                 <div className="font-medium dark:text-white">
                   <div>{learner.name}</div>
-                  <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
-                    {learner.email}
-                  </div>
-                  <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
-                    {learner.phone}
-                  </div>
+                  <div className="text-sm pl-3">{learner.email}</div>
+                  <div className="text-sm pl-3">{learner.phone}</div>
                 </div>
               </div>
             </td>
-            <td className="px-4 py-4 font-light max-w-72">
-              {learner.bio}
-            </td>
-
-            <td className="px-6 py-4">
-              <h1 className="pb-2 dark:text-white"> Courses: </h1>
-              <ol className="max-w-md space-y-1 list-decimal list-inside ">
-                {(learnerCourses[learner._id] || []).map((course, index) => (
-                  <li key={index}>{course.title}</li>
-                ))}
-              </ol>
-            </td>
+            <td className="px-4 py-4 font-light max-w-72">{learner.bio}</td>
+            
           </tr>
         ))}
       </tbody>
