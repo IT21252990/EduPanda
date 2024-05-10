@@ -9,7 +9,7 @@ function MyCourses() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5050/api/enrollments/6639d588bade26d37ed14e31', {
+        const response = await fetch('http://localhost:5003/api/enrollments/663b397718ded1c9b2515d1c', {
           method: 'GET'
         });
         const jsonData = await response.json();
