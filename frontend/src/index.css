@@ -31,12 +31,12 @@ body {
   height: 100%;
   /* place-items: center; */
   /* min-width: 320px;*/
- min-height: 110vh; 
+ /* min-height: 110vh; 
   background-color: #111827;
-}
+} */
 
 /* login */
-div#root {
+/* div#root {
   margin-left: auto;
   margin-right: auto;
 }
@@ -61,10 +61,10 @@ button.w-full.text-white.bg-primary-600.hover\:bg-primary-700.focus\:ring-4.focu
           color: rgb(255 255 255 / var(--tw-text-opacity));
           padding-top: 0px;
       }
-  }
+  } */
 
 /* profile */
-.bg-gray-100 {
+/* .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39);
 }
@@ -95,10 +95,10 @@ h2.updateprofile {
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(170 171 173);
-}
+} */
 
 /* landing page */
-.splits {
+/* .splits {
   height: 100%;
   width: 50%;
   position: fixed;
@@ -116,7 +116,7 @@ h2.updateprofile {
   right: 0;
   background-color: #1f2937c7;
   background-size: cover;
-  /* text-align: left; */
+  
 }
 .centered {
   position: absolute;
@@ -133,20 +133,20 @@ h2.updateprofile {
   width: 1000px;
   top: 0;
   overflow-x: hidden;
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .container {
-    flex-direction: column; /* Change layout to stack vertically on small screens */
+    flex-direction: column; 
   }
 
   .splits {
-    width: 100%; /* Each splits takes full width on small screens */
-    position: relative; /* Reset position for stacking */
+    width: 100%;
+    position: relative; 
   }
 
   .rights {
-    background-image: none; /* Remove background image on small screens */
+    background-image: none; 
   }
 }
 
@@ -158,16 +158,13 @@ h2.land-head {
 }
 img.land-logo {
   width: 89px;
-  /* margin-left: auto;
-  margin-right: auto; */
 }
 h2.land-name {
   font-size: 85px;
   text-align: center;
   font-weight: 800;
   padding-top: 15px;
-  /* color: #111827; */
 }
 button.bg-blue-500.hover\:bg-blue-600.text-white.py-2.px-4.rounded {
   margin-top: 16px;
-} */
+}  */
