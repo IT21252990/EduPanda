@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {loadStripe} from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 const CourseCard = ({ course }) => {
     const navigate = useNavigate();
     const [courseDetails, setCourseDetails] = useState(null);
+    const [bought, setBought] = useState(false);
 
     useEffect(() => {
         const fetchCourseDetails = async () => {
@@ -27,7 +28,30 @@ const CourseCard = ({ course }) => {
         fetchCourseDetails();
     }, [course]);
 
-    const handleBuyClick = async() => {
+
+    useEffect(() => {
+        const fetchBought = async () => {
+            try {
+                const response = await fetch(`http://localhost:5003/api/enrollments/663b397718ded1c9b2515d1c/${course}`, {
+                    method: 'GET'
+                });
+
+                if (response.ok) {
+                    const json = await response.json();
+                    setBought(true);
+                } else {
+                    console.log('Error fetching course details');
+                }
+            } catch (error) {
+                console.log('Error fetching course ', error);
+            }
+        };
+
+        fetchBought();
+    }, [course]);
+
+
+    const handleBuyClick = async () => {
         const stripe = await loadStripe("pk_test_51PEW6X087utRYQow5L8XVGunjUzQUeNYFwL4wZge2q8xMLxntDzD9E5lPS5zRlwjiMAuDJuNOxCX39Cm3QYPDsSv00G9BRoe4B");
 
         const body = {
@@ -44,7 +68,7 @@ const CourseCard = ({ course }) => {
             "Content-Type": "application/json",
         }
 
-        const response = await fetch("http://localhost:5050/api/enrollments/create-checkout-session", {
+        const response = await fetch("http://localhost:5003/api/enrollments/create-checkout-session", {
             method: "POST",
             headers,
             body: JSON.stringify(body)
@@ -58,17 +82,17 @@ const CourseCard = ({ course }) => {
 
         if (result.error) {
             console.log(result.error);
-            
-        }
-        }
 
-        // if (courseDetails) {
-        //     navigate(`/purchase/${courseDetails._id}`);
-        // }
-    
+        }
+    }
+
+    // if (courseDetails) {
+    //     navigate(`/purchase/${courseDetails._id}`);
+    // }
+
 
     return (
-        <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-8">
+        <div className="max-w-md min-w-full mx-auto bg-gray-200 shadow-lg rounded-lg overflow-hidden my-8">
             {courseDetails && (
                 <div className="p-4 flex flex-col h-full">
                     <div>
@@ -80,8 +104,7 @@ const CourseCard = ({ course }) => {
                         <p className="text-gray-700"><strong>Tags: </strong>{courseDetails.tags.join(', ')}</p>
                     </div>
                     <div className="mt-auto">
-                        <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4" onClick={handleBuyClick}>Buy Now</button>
-                    </div>
+                        {!bought && <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4" onClick={handleBuyClick}>Buy Now</button>}</div>
                 </div>
             )}
         </div>
