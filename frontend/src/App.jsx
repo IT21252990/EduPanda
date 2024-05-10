@@ -23,13 +23,27 @@ import ProgressMonitoring from './pages/instructor/ProgressMonitoring';
 import FeedbackAndReviews from './pages/instructor/FeedbackAndReviews';
 import Profile from './pages/instructor/Profile';
 import CreateNewCourse from './pages/instructor/CreateNewCourse';
+
+
+//Learner
+import LearnerDashboard from './pages/learner/LearnerDashboard'
+import MyCourses from './pages/learner/MyCourses'
+
 import Login from './pages/Auth/LoginPage';
 import Register from './pages/Auth/RegisterPage';
+
 import MyProfile from './pages/admin/Myprofile/MyProfile';
 import ResetPassword from './pages/Auth/ResetPassword';
 import ForgotPassword from './pages/Auth/ForgotPassword';
 import InstructorMyProfile from './pages/instructor/Myprofile/InstructorMyProfile';
 import InstructorReg from './pages/Auth/InstructorReg';
+
+// import MyProfile from './pages/Myprofile/MyProfile';
+
+import LearnerHome from './pages/learner/Home'
+import Success from './pages/learner/Success'
+import Cancel from './pages/learner/Cancel'
+
 
 function App() {
 
@@ -66,7 +80,15 @@ function App() {
           <Route path="/feedback_and_reviews" element={<FeedbackAndReviews />} />
           <Route path="/instructor_profile" element={<Profile />} />
           <Route path="/create_new_course" element={<CreateNewCourse />} />
-          
+
+
+          {/* learner */}
+          <Route path="/LearnerDashboard" element={<LearnerDashboard />} />
+          <Route path="/MyCourses" element={<MyCourses />} />
+          <Route path="/Home" element={<LearnerHome />} />
+          <Route path="/Success" element={<Success />} />
+          <Route path="/Cancel" element={<Cancel />} />
+
         </Routes>
       </BrowserRouter>
     

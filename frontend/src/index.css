@@ -20,9 +20,9 @@
 
 body {
   display: flex;
-  height: 100%;
   /* place-items: center; */
-  /* min-width: 320px;*/
- min-height: 110vh; 
+  min-width: 320px;
+  min-height: 100vh;
   background-color: #111827;
 }
+
