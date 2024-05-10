@@ -63,8 +63,8 @@ const approveCourse = async (req, res) => {
     }
 };
 
-//@desc Approve a course
-//@route PATCH /api/courses/approve/:id
+//@desc Reject a course
+//@route PATCH /api/courses/reject/:id
 //@access public
 const rejectCourse = async (req, res) => {
     const { id } = req.params;
@@ -83,11 +83,26 @@ const rejectCourse = async (req, res) => {
     }
 };
 
+//@desc Fetch courses for a specific instructor
+//@route GET /api/courses/instructor/:instructorId
+//@access public
+const getCoursesForInstructor = async (req, res) => {
+    const { instructorId } = req.params;
+    try {
+        const courses = await Course.find({ instructor: instructorId });
+        res.json(courses);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 module.exports = {
     getAllCourses,
     getNewCourses,
     getUpdatedCourses,
     approveCourse,
-    rejectCourse
+    rejectCourse,
+    getCoursesForInstructor
 };
