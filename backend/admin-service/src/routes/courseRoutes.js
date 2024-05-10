@@ -4,7 +4,8 @@ const {
     getNewCourses,
     getUpdatedCourses,
     approveCourse,
-    rejectCourse
+    rejectCourse,
+    getCoursesForInstructor
 } = require("../controllers/courseControllers");
 
 const router = express.Router();
@@ -15,6 +16,9 @@ router.get("/", getAllCourses);
 router.get("/new", getNewCourses); 
 //GET updated courses
 router.get("/updated", getUpdatedCourses); 
+//GET courses for a instructor
+router.get("/instructor/:instructorId", getCoursesForInstructor); 
+
 //Patch approve a course
 router.patch("/approve/:id", approveCourse); 
 //Patch reject a course

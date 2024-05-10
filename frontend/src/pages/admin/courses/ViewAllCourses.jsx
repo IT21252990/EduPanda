@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AdNavBar from "../../../components/admin/AdNavBar";
 import AdSidebar from "../../../components/admin/AdSideBar";
-import CoursesTRDetails from "../../../components/admin/courses/allCourses/CoursesTRDetails";
-import CourseTR from "../../../components/admin/courses/allCourses/CourseTR";
+import CoursesTRDetails from "../../../components/admin/courses/CoursesTRDetails";
+import CourseTR from "../../../components/admin/courses/CourseTR";
 
 export default function ViewAllCourses() {
   const [courses, setCourses] = useState([]);

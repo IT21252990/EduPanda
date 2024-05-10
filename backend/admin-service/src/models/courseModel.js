@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const contentSchema = new mongoose.Schema({
     title: { type: String, required: true },
-    type: { type: String, enum: ['Lecture', 'Video', 'Quiz'], required: true },
+    type: { type: String, enum: ['Lecture', 'Video', 'Quiz' , 'Project'], required: true },
     lectureNotes: { type: String },
     videoURL: { type: String }, 
     quizQuestions: [{ type: String }] 
