@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import React from "react";
 
 //pages
 import NavigatePage from "./pages/NavigatePage"
+import LandingPage from "./pages/LandingPage"
 
 //admin
 import AdminHome from './pages/admin/AdminHome';
@@ -25,9 +28,15 @@ import CreateNewCourse from './pages/instructor/CreateNewCourse';
 //Learner
 import LearnerDashboard from './pages/learner/LearnerDashboard'
 import MyCourses from './pages/learner/MyCourses'
+
+import Login from './pages/Auth/LoginPage';
+import Register from './pages/Auth/RegisterPage';
+import MyProfile from './pages/Myprofile/MyProfile';
+
 import LearnerHome from './pages/learner/Home'
 import Success from './pages/learner/Success'
 import Cancel from './pages/learner/Cancel'
+
 
 
 function App() {
@@ -35,9 +44,14 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <ToastContainer />
         <Routes>
           {/* Test - Remove later */}
-          <Route path="/" element={<NavigatePage />} />
+          {/* <Route path="/" element={<NavigatePage />} /> */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/myprofile" element={<MyProfile />} />
 
           {/* admin */}
           <Route path="/AdminHome" element={<AdminHome />} />
