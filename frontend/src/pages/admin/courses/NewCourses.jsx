@@ -16,16 +16,13 @@ export default function NewCourses() {
     setDropdownCourseId((prevId) => (prevId === courseId ? null : courseId));
   };
 
-  const onAccept = async (courseId) => {
-    ApproveSwal(courseId);
+  const onAccept = async (courseId, courseName, instructorEmail) => {
+    ApproveSwal(courseId, courseName, instructorEmail);
   };
-  
 
-  const onReject = async (courseId) => {
-    RejectSwal(courseId);
+  const onReject = async (courseId, courseName, instructorEmail) => {
+    RejectSwal(courseId, courseName, instructorEmail);
   };
-  
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -106,7 +103,9 @@ export default function NewCourses() {
                         </td>
                         <td className="px-4 py-4">
                           <button
-                            onClick={() => onAccept(course._id)}
+                            onClick={() =>
+                              onAccept(course._id, course.title, course.instructor.email)
+                            }
                             type="button"
                             className="inline-flex justify-center items-center text-base font-normal py-2 pr-3 text-center
                         focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 rounded-lg me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
@@ -133,7 +132,7 @@ export default function NewCourses() {
                         </td>
                         <td className="px-4 py-4">
                           <button
-                            onClick={() => onReject(course._id)}
+                            onClick={() => onReject(course._id,course.title, course.instructor.email)}
                             type="button"
                             className="inline-flex justify-center items-center text-base font-normal py-2 pr-3 text-center
                         focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
