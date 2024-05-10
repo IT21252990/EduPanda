@@ -38,7 +38,7 @@ import ForgotPassword from './pages/Auth/ForgotPassword';
 import InstructorMyProfile from './pages/instructor/Myprofile/InstructorMyProfile';
 import InstructorReg from './pages/Auth/InstructorReg';
 
-import MyProfile from './pages/Myprofile/MyProfile';
+// import MyProfile from './pages/Myprofile/MyProfile';
 
 import LearnerHome from './pages/learner/Home'
 import Success from './pages/learner/Success'
