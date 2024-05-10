@@ -12,18 +12,18 @@ export default function LearnerDetails() {
             1
           </th>
           <td className="px-6 py-4">
-            <div class="flex items-center gap-5">
+            <div className="flex items-center gap-5">
               <img
-                class="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
                 src="/avatar.png"
                 alt=""
               />
-              <div class="font-medium dark:text-white">
+              <div className="font-medium dark:text-white">
                 <div>Name</div>
-                <div class="text-sm pl-3 text-gray-500 dark:text-gray-400">
+                <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
                   Email@gmai.com
                 </div>
-                <div class="text-sm pl-3 text-gray-500 dark:text-gray-400">
+                <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
                   +94 11 4561 1234
                 </div>
               </div>
@@ -54,18 +54,18 @@ export default function LearnerDetails() {
             1
           </th>
           <td className="px-6 py-4">
-            <div class="flex items-center gap-5">
+            <div className="flex items-center gap-5">
               <img
-                class="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
                 src="/avatar.png"
                 alt=""
               />
-              <div class="font-medium dark:text-white">
+              <div className="font-medium dark:text-white">
                 <div>Name</div>
-                <div class="text-sm pl-3 text-gray-500 dark:text-gray-400">
+                <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
                   Email@gmai.com
                 </div>
-                <div class="text-sm pl-3 text-gray-500 dark:text-gray-400">
+                <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
                   +94 11 4561 1234
                 </div>
               </div>
@@ -96,18 +96,18 @@ export default function LearnerDetails() {
             1
           </th>
           <td className="px-6 py-4">
-            <div class="flex items-center gap-5">
+            <div className="flex items-center gap-5">
               <img
-                class="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full"
                 src="/avatar.png"
                 alt=""
               />
-              <div class="font-medium dark:text-white">
+              <div className="font-medium dark:text-white">
                 <div>Name</div>
-                <div class="text-sm pl-3 text-gray-500 dark:text-gray-400">
+                <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
                   Email@gmai.com
                 </div>
-                <div class="text-sm pl-3 text-gray-500 dark:text-gray-400">
+                <div className="text-sm pl-3 text-gray-500 dark:text-gray-400">
                   +94 11 4561 1234
                 </div>
               </div>
