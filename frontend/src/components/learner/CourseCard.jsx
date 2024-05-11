@@ -7,48 +7,54 @@ const CourseCard = ({ course }) => {
     const [courseDetails, setCourseDetails] = useState(null);
     const [bought, setBought] = useState(false);
 
+
+    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [user, setUser] = useState(null);
+
+    
     useEffect(() => {
-        const fetchCourseDetails = async () => {
+    async function fetchData() {
+        if (token) {
             try {
-                const response = await fetch(`http://localhost:5001/api/courses/${course}`, {
+                // Fetch user
+                const userResponse = await fetch('http://localhost:5002/api/users/getuser', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const userData = await userResponse.json();
+                setUser(userData);
+
+                // Fetch bought status
+                const boughtResponse = await fetch(`http://localhost:5003/api/enrollments/${userData._id}/${course}`, {
                     method: 'GET'
                 });
-
-                if (response.ok) {
-                    const json = await response.json();
-                    setCourseDetails(json);
-                } else {
-                    console.log('Error fetching course details');
-                }
-            } catch (error) {
-                console.log('Error fetching course ', error);
-            }
-        };
-
-        fetchCourseDetails();
-    }, [course]);
-
-
-    useEffect(() => {
-        const fetchBought = async () => {
-            try {
-                const response = await fetch(`http://localhost:5003/api/enrollments/663b397718ded1c9b2515d1c/${course}`, {
-                    method: 'GET'
-                });
-
-                if (response.ok) {
-                    const json = await response.json();
+                if (boughtResponse.ok) {
+                    const boughtData = await boughtResponse.json();
                     setBought(true);
                 } else {
+                    console.log('Error fetching bought status');
+                }
+
+                // Fetch course details
+                const courseResponse = await fetch(`http://localhost:5001/api/courses/${course}`, {
+                    method: 'GET'
+                });
+                if (courseResponse.ok) {
+                    const courseData = await courseResponse.json();
+                    setCourseDetails(courseData);
+                } else {
                     console.log('Error fetching course details');
                 }
             } catch (error) {
-                console.log('Error fetching course ', error);
+                console.error('Error in fetching data:', error);
             }
-        };
+        }
+    }
 
-        fetchBought();
-    }, [course]);
+    fetchData();
+}, [token, course]);
 
 
     const handleBuyClick = async () => {
@@ -59,7 +65,7 @@ const CourseCard = ({ course }) => {
             currency: "usd",
             title: courseDetails.title,
             cid: courseDetails._id,
-            uid: "663b397718ded1c9b2515d1c"
+            uid: user._id
         }
         console.log("body", body);
 
