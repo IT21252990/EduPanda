@@ -283,7 +283,7 @@ exports.forgotPassword = async (req, res) => {
     if (token) {
       await token.deleteOne();
     }
-  
+
     // Create Reset Token
     let resetToken = crypto.randomBytes(32).toString("hex") + user.id;
     console.log(resetToken);
