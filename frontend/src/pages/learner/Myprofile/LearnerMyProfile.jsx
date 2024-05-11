@@ -3,12 +3,13 @@ import axios from 'axios';
 import { Button } from "flowbite-react";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import NavBar from "../../../components/instructor/NavBar";
-import './instructorProfile.css'
+import AdNavbar from "../../../components/admin/AdNavBar";
+import AdSidebar from "../../../components/admin/AdSideBar";
+import NavBar from "../../../components/learner/NavBar";
 
+import './usermanage.css'
 
-
-const InstructorMyProfile = () => {
+const LearnerMyProfile = () => {
   const [passwordformData, setpasswordFormData] = useState({
     oldPassword: '',
     password: '',
@@ -127,7 +128,7 @@ const InstructorMyProfile = () => {
             'Content-Type': 'application/json'
           }
         });
-       
+        
         setUser(responseUpdate.data);
         setShowUpdateForm(false);
         toast.success('User details updated successfully');
@@ -141,11 +142,11 @@ const InstructorMyProfile = () => {
 
   return (
     <div className="flex flex-col w-screen h-full top-0">
-     <div className="flex flex-col grow-0">
-        <NavBar />
-      </div>
+    <div className="flex flex-col grow-0">
+      <NavBar />
+    </div>
 
-    
+      
       {user ? (
       <div className="profilebg-gray-100">
         <div className="container mx-auto profilepy-8">
@@ -351,4 +352,4 @@ const InstructorMyProfile = () => {
   );
 }
 
-export default InstructorMyProfile;
+export default LearnerMyProfile;

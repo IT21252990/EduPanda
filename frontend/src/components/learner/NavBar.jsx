@@ -58,7 +58,7 @@ function NavBar() {
               
               <li>
                 <a
-                  href="/instructor_profile"
+                  href="/learner_profile"
                   className="text-gray-900 dark:text-white hover:underline"
                 >
                   Profile
