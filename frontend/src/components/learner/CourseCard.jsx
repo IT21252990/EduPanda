@@ -111,8 +111,9 @@ const CourseCard = ({ course }) => {
                         <p className="text-gray-700"><strong>Duration: </strong>{courseDetails.duration} hours</p>
                         <p className="text-gray-700"><strong>Tags: </strong>{courseDetails.tags.join(', ')}</p>
                     </div>
-                    <div className="mt-auto">
-                        {!bought && <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4" onClick={handleBuyClick}>Buy Now</button>}</div>
+                    <div className="mt-auto mx-auto my-4 ">
+                        {!bought && <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4" onClick={handleBuyClick}>Buy Now</button>}
+                    </div>
                 </div>
             )}
         </div>

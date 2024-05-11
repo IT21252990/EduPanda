@@ -1,58 +1,50 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../../components/learner/NavBar";
-import { useNavigate } from "react-router-dom";
 import CourseDetails from "../../components/learner/CourseDetails";
 
 function MyCourses() {
   const [courseIds, setCourseIds] = useState([]);
-
-
-    const [token, setToken] = useState(localStorage.getItem('token'));
-    const [user, setUser] = useState(null);
-
-    
-    useEffect(() => {
-    if (token) {
-        fetch('http://localhost:5002/api/users/getuser', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            setUser(data);
-            console.log("userData", data);
-        })
-        .catch(error => {
-            console.error('Error fetching user profile:', error);
-        });
-    }
-}, [token]);
-
-
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`http://localhost:5003/api/enrollments/${user._id}`, {
-          method: 'GET'
-        });
-        const jsonData = await response.json();
-        const cids = jsonData.map(item => item.cid);
-        setCourseIds(cids);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [user]);
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch('http://localhost:5002/api/users/getuser', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        setUser(data);
+        console.log("userData", data);
+        // Fetch course data after user data is successfully fetched
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`http://localhost:5003/api/enrollments/${data._id}`, {
+              method: 'GET'
+            });
+            const jsonData = await response.json();
+            const cids = jsonData.map(item => item.cid);
+            setCourseIds(cids);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+        fetchData();
+      })
+      .catch(error => {
+        console.error('Error fetching user profile:', error);
+      });
+    }
+  }, []);
 
   return (
-    <div className="flex flex-col h-screen w-screen">
+    <div className="flex flex-col min-h-screen w-screen">
       <NavBar />
-      <div className="flex-grow flex justify-center items-center">
+      <div className="container mx-auto my-8 px-4">
+        <h2 className="text-3xl font-bold mb-4">My Courses</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {courseIds.map((course, index) => (
             <CourseDetails key={index} course={course} />

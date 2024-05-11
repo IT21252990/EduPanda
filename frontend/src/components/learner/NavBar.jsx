@@ -1,86 +1,77 @@
-import React, { useState , useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function NavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
-
-  
   return (
     <div>
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-          <a
-            href="/instructor_home"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            <img src="/edupanda.png" className="h-8" alt="Flowbite Logo" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+      {/* Top Navbar */}
+      <nav className="bg-white border-b border-gray-200 dark:bg-gray-900">
+        <div className="flex justify-between items-center mx-auto max-w-screen-xl p-4">
+          <Link to="/learner_home" className="flex items-center space-x-3">
+            <img src="/edupanda.png" className="h-8" alt="EduPanda Logo" />
+            <span className="text-2xl font-semibold whitespace-nowrap dark:text-white">
               EduPanda
             </span>
-          </a>
-          <div className="flex items-center space-x-6 rtl:space-x-reverse text-sm  text-gray-500 dark:text-white">
-    
-             Welcome Learner!
+          </Link>
+          <div className="hidden md:flex items-center space-x-6 text-sm text-gray-500 dark:text-white">
+            Welcome, Learner!
           </div>
         </div>
       </nav>
+
+      {/* Bottom Navbar */}
       <nav className="bg-gray-50 dark:bg-gray-700">
         <div className="max-w-screen-xl px-4 py-3 mx-auto">
           <div className="md:flex hidden items-center justify-between">
-            <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+            <ul className="flex flex-row font-medium mt-0 space-x-8 text-sm">
               <li>
-                <a
-                  href="/Home"
-                  className="text-gray-900 dark:text-white hover:underline"
-                  aria-current="page"
+                <Link
+                  to="/home"
+                  className="text-gray-900 dark:text-white  hover:bg-gray-200 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition duration-300"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="/MyCourses"
-                  className="text-gray-900 dark:text-white hover:underline"
+                <Link
+                  to="/mycourses"
+                  className="text-gray-900 dark:text-white  hover:bg-gray-200 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition duration-300"
                 >
                   My Courses
-                </a>
+                </Link>
               </li>
-              <li>
-                <a
-                  href="/MyCourses"
-                  className="text-gray-900 dark:text-white hover:underline"
+              {/* <li>
+                <Link
+                  to="/monitor_progress"
+                  className="text-gray-900 dark:text-white hover:underline hover:bg-gray-200 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition duration-300"
                 >
                   Monitor Progress
-                </a>
-              </li>
-              
+                </Link>
+              </li> */}
               <li>
-                <a
-                  href="/instructor_profile"
-                  className="text-gray-900 dark:text-white hover:underline"
+                <Link
+                  to="/instructor_profile"
+                  className="text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 px-4 py-2 rounded-lg transition duration-300"
                 >
                   Profile
-                </a>
+                </Link>
               </li>
             </ul>
-            <div
-              onClick={() => {
-                navigate("/");
-              }}
-              className="flex items-center space-x-6 rtl:space-x-reverse"
-            >
-              <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <Link className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700 dark:focus:ring-red-600">
-                  Log Out
-                </Link>
-              </div>
+            <div className="flex items-center space-x-6">
+              <button
+                onClick={() => {
+                  navigate("/");
+                }}
+                className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700 dark:focus:ring-red-600 transition duration-300"
+              >
+                Log Out
+              </button>
             </div>
           </div>
-          
-            
-          </div>
+        </div>
       </nav>
     </div>
   );
