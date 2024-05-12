@@ -48,15 +48,15 @@ const getEnrollment = async (req, res) => {
 
 // create new enrollment
 const createUserEnroll = async (req, res) => {
-
     const courseDetails = req.body;
-    const { cid, uid } = req.body;
-    console.log(courseDetails);
+
+    const { cid, uid, title } = req.body;
 
     const customer = await stripe.customers.create({
         metadata: {
             uid: uid,
-            cid: cid
+            cid: cid,
+            courseTitle: title      
         }
     });
     try {
@@ -68,7 +68,7 @@ const createUserEnroll = async (req, res) => {
                     price_data: {
                         currency: 'usd',
                         product_data: {
-                            name: courseDetails.title,
+                            name: title,
                             metadata: {
                                 uid: uid,
                                 cid: cid

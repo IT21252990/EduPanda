@@ -43,6 +43,7 @@ import InstructorReg from './pages/Auth/InstructorReg';
 import LearnerHome from './pages/learner/Home'
 import Success from './pages/learner/Success'
 import Cancel from './pages/learner/Cancel'
+import CourseViewPage from './pages/learner/CourseViewPage'
 
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
           <Route path="/Home" element={<LearnerHome />} />
           <Route path="/Success" element={<Success />} />
           <Route path="/Cancel" element={<Cancel />} />
+          <Route path="/CourseViewPage" element={<CourseViewPage />} />
 
         </Routes>
       </BrowserRouter>
