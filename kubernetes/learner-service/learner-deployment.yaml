@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: learner-service
+  labels:
+    app: learner-service
+spec:
+  replicas: 1 # Copies of each pod to run
+  selector:
+    matchLabels:
+      app: learner-service
+  template:
+    metadata:
+      labels:
+        app: learner-service
+    spec:
+      containers:
+        - name: learner-service
+          image: learnerservice:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5003

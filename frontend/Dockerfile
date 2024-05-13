@@ -13,7 +13,7 @@ RUN npm install --legacy-peer-deps
 # Copy the rest of the application code
 COPY . .
 
-# Expose port 3000 (assuming your frontend application runs on port 3000)
+# Expose port 5173
 EXPOSE 5173
 
 # Command to run the application

@@ -20,14 +20,12 @@ services:
   learner-service: # learner service configuration
     image: learnerservice:v1
     ports:
-      - "5050:5050"
+      - "5003:5003"
 
-  # sms-service: # sms service configuration
-  #   build: /backend/sms-service
-  #   command: npm start
-  #   ports:
-  #     - "80:80"
-  #   restart: unless-stopped
+  sms-service: # sms service configuration
+    image: smsservice:v1
+    ports:
+      - "3001:3001"
 
   user-service: # user service configuration
     image: userservice:v1
@@ -45,3 +43,4 @@ services:
       - email-service
       - learner-service
       - user-service
+      - sms-service
