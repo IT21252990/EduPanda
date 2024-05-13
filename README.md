@@ -1,8 +1,11 @@
 # EduPanda
  Educational Platform for Online Learning
 
-# Ports
-- Instructer - 5000
-- Admin - 5001
-- User - 5002
-- Learner - 5003
+
+
+##	Name                 IT Number	 
+--------------------------------------
+  Jayathilaka A.G.K.D	IT21252990	
+  Rathnayake R.M.U.V.	IT21271182	
+  Gunasekara W.M.A.S.	IT21373916	
+  Liyanage U.S.P.		IT21306754	
