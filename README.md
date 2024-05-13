@@ -1,7 +1,7 @@
 # EduPanda
  Educational Platform for Online Learning
 
-
+## Refer Docker.md & Kubernetes.md files for the steps to deploy the Application
 
 ##	Name                 IT Number	 
 --------------------------------------
