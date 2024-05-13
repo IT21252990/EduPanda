@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import AdNavbar from "../../../components/admin/AdNavBar";
 import AdSidebar from "../../../components/admin/AdSideBar";
+import NavBar from "../../../components/learner/NavBar";
+
 import './usermanage.css'
 
-const MyAccount = () => {
+const LearnerMyProfile = () => {
   const [passwordformData, setpasswordFormData] = useState({
     oldPassword: '',
     password: '',
@@ -96,7 +98,7 @@ const MyAccount = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Handle Image upload
     if (
       profileImage &&
@@ -106,27 +108,30 @@ const MyAccount = () => {
     ) {
       const image = new FormData();
       image.append("file", profileImage);
-      image.append("cloud_name", "dqwgbpf2d");
-      image.append("upload_preset", "cqwykn6c");
-
+      image.append("upload_preset", "cqwykn6c"); // Removed 'cloud_name', it's already in the URL
+  
       try {
-        // First save image to cloudinary
+        // First save image to Cloudinary
         const response = await fetch(
           "https://api.cloudinary.com/v1_1/dqwgbpf2d/image/upload",
-          { method: "post", body: image }
+          { method: "POST", body: image }
         );
         const imgData = await response.json();
-        setImageURL(imgData.url.toString());
-
+        const imageURL = imgData.secure_url; // Use 'secure_url' for HTTPS
+  
         // Update user data
-        const updatedData = { ...formData, photo: imgData.url.toString() };
-        const responseUpdate = await axios.put('http://localhost:5002/api/users/updateuser', updatedData, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+        const updatedData = { ...formData, photo: imageURL };
+        const responseUpdate = await axios.put(
+          'http://localhost:5002/api/users/updateuser',
+          updatedData,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
           }
-        });
-        
+        );
+  
         setUser(responseUpdate.data);
         setShowUpdateForm(false);
         toast.success('User details updated successfully');
@@ -134,24 +139,51 @@ const MyAccount = () => {
         console.error('Error updating user details:', error);
         toast.error('Failed to update user details');
       }
+    } else {
+      toast.error('Please select a valid image file (JPEG/JPG/PNG)');
     }
   };
+  
+
+
+
+
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEnrolledCourses = async () => {
+      try {
+        // Make a GET request to your backend API endpoint
+        const response = await axios.get('http://localhost:5002/api/users/enrolledCourses', {
+          // Include the JWT token in the request headers
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        // Set the enrolled courses state with the data from the response
+        setEnrolledCourses(response.data.enrolledCourses);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching enrolled courses:', error);
+      }
+    };
+
+    fetchEnrolledCourses();
+  }, []);
 
 
   return (
-    <div>
-      <div className="w-full">
-        <AdNavbar />
-      </div>
+    <div className="flex flex-col w-screen h-full top-0">
+    <div className="flex flex-col grow-0">
+      <NavBar />
+    </div>
 
-      <div className="sm:flex sm:flex-1">
-        <div className="w-64 mt-16">
-          <AdSidebar />
-        </div>
-      </div>
+      
       {user ? (
       <div className="profilebg-gray-100">
-        <div className="container mx-auto profilepy-8" style={{ marginLeft: '256px' }}>
+        <div className="container mx-auto profilepy-8">
           <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
             <div className="col-span-4 sm:col-span-5">
               <div className="bg-white profileshadow rounded-lg p-6">
@@ -176,6 +208,67 @@ const MyAccount = () => {
                   <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{user.email}</span>
                   <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{formData.phone}</span>
                 </div>
+
+
+
+
+                <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700" style={{ marginTop: '20px' }}>
+    <div class="flex items-center justify-between mb-4">
+        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Enrolled Courses</h5>
+        <a href="/MyCourses" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+            View
+        </a>
+   </div>
+   <div class="flow-root">
+   {enrolledCourses.length === 0 ? (
+        <p>No courses enrolled yet.</p>
+      ) : (
+        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+          {enrolledCourses.map(course => (
+            <li key={course._id}>
+                <div class="flex items-center">
+                    
+                    <div class="flex-1 min-w-0 ms-4">
+                    <p className="text-sm font-medium text-gray-900 truncate dark:text-white" style={{ margin: '10px' }}>
+                        {course.title}
+                        </p>
+                        
+                    </div>
+                    
+                </div>
+            </li>
+
+
+))}
+        </ul>
+       )}
+</div>
+</div>
+
+
+                {/* <div>
+      <h2>Enrolled Courses</h2>
+      {enrolledCourses.length === 0 ? (
+        <p>No courses enrolled yet.</p>
+      ) : (
+        <ul>
+          {enrolledCourses.map(course => (
+            <li key={course._id}>{course.title}</li>
+          ))}
+        </ul>
+      )}
+    </div> */}
+
+
+
+
+
+
+
+
+
+
+
               </div>
             </div>
             <div className="col-span-4 sm:col-span-7">
@@ -355,4 +448,4 @@ const MyAccount = () => {
   );
 }
 
-export default MyAccount;
+export default LearnerMyProfile;

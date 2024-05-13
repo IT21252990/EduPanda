@@ -4,6 +4,8 @@ import { Button } from "flowbite-react";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from "../../../components/instructor/NavBar";
+import './instructorProfile.css'
+
 
 
 const InstructorMyProfile = () => {
@@ -145,11 +147,11 @@ const InstructorMyProfile = () => {
 
     
       {user ? (
-      <div className="bg-gray-100">
-        <div className="container mx-auto py-8">
+      <div className="profilebg-gray-100">
+        <div className="container mx-auto profilepy-8">
           <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
             <div className="col-span-4 sm:col-span-5">
-              <div className="bg-white shadow rounded-lg p-6">
+              <div className="bg-white profileshadow rounded-lg p-6">
                 <div className="flex flex-col items-center">
                   <img
                     src={user.photo} // Update src attribute to use formData
@@ -158,7 +160,7 @@ const InstructorMyProfile = () => {
                   />
 
                   <h1 className="text-xl font-bold">{formData.name}</h1>
-                  <p className="text-gray-700">{user.role}</p>
+                  <p className="profiletext-gray-700">{user.role}</p>
                   <div className="mt-6 flex flex-wrap gap-4 justify-center">
                     <button onClick={handleUpdateClick} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                       Update
@@ -168,27 +170,27 @@ const InstructorMyProfile = () => {
                 </div>
                 <hr className="my-6 border-t border-gray-300"></hr>
                 <div className="flex flex-col">
-                  <span className="text-gray-700 font-bold tracking-wider mb-2">{user.email}</span>
-                  <span className="text-gray-700 font-bold tracking-wider mb-2">{formData.phone}</span>
+                  <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{user.email}</span>
+                  <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{formData.phone}</span>
                 </div>
               </div>
             </div>
             <div className="col-span-4 sm:col-span-7">
-              <div className="bg-white shadow rounded-lg p-6">
+              <div className="bg-white profileshadow rounded-lg p-6">
                 <h2 className="text-xl font-bold mb-4">About Me</h2>
-                <p className="text-gray-700">{formData.bio}</p>
+                <p className="profiletext-gray-700">{formData.bio}</p>
 
                 <div className={`fixed inset-0 flex items-center justify-center z-50 ${showUpdateForm ? 'block' : 'hidden'}`}>
                   <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-                  <div className="relative bg-white rounded-lg overflow-hidden max-w-md p-6 mx-4">
+                  <div className="profile">
                     <h2 className="updateprofile">Update Profile</h2>
-                    <form onSubmit={handleFormSubmit}>
+                    <form method='post'>
                       <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                        <label className="block profiletext-gray-700 text-sm font-bold mb-2" htmlFor="name">
                           Name
                         </label>
                         <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          className="appearance-none border rounded w-full py-2 px-3 profiletext-gray-700 leading-tight focus:outline-none focus:profileshadow-outline"
                           id="name"
                           type="text"
                           placeholder="Name"
@@ -199,11 +201,11 @@ const InstructorMyProfile = () => {
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="bio">
+                        <label className="block profiletext-gray-700 text-sm font-bold mb-2" htmlFor="bio">
                           Bio
                         </label>
                         <textarea
-                          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          className="appearance-none border rounded w-full py-2 px-3 profiletext-gray-700 leading-tight focus:outline-none focus:profileshadow-outline"
                           id="bio"
                           placeholder="Bio"
                           name="bio"
@@ -213,11 +215,11 @@ const InstructorMyProfile = () => {
                         />
                       </div>
                       <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+                        <label className="block profiletext-gray-700 text-sm font-bold mb-2" htmlFor="phone">
                           Phone
                         </label>
                         <input
-                          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          className="appearance-none border rounded w-full py-2 px-3 profiletext-gray-700 leading-tight focus:outline-none focus:profileshadow-outline"
                           id="phone"
                           type="text"
                           placeholder="Phone"
@@ -228,7 +230,7 @@ const InstructorMyProfile = () => {
                         />
                       </div>
                       <div className="mb-4">
-                      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+                      <label className="block profiletext-gray-700 text-sm font-bold mb-2" htmlFor="phone">
                           Photo
                         </label>
                           <input type="file" accept="image/*" onChange={handleImageChange} />
@@ -237,14 +239,15 @@ const InstructorMyProfile = () => {
                       <div className="flex items-center justify-between">
                         <button
                           type="submit"
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:profileshadow-outline"
+                          onClick={handleFormSubmit}
                         >
                           Update Profile
                         </button>
                         <button
                           type="button"
                           onClick={() => setShowUpdateForm(false)}
-                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:profileshadow-outline"
                         >
                           Cancel
                         </button>
@@ -259,7 +262,7 @@ const InstructorMyProfile = () => {
                         Find me on
                     </h3>
                     <div class="flex justify-center items-center gap-6 my-6">
-                        <a class="text-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds LinkedIn" href=""
+                        <a class="profiletext-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds LinkedIn" href=""
                             target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-6">
                                 <path fill="currentColor"
@@ -267,7 +270,7 @@ const InstructorMyProfile = () => {
                                 </path>
                             </svg>
                         </a>
-                        <a class="text-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds YouTube" href=""
+                        <a class="profiletext-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds YouTube" href=""
                             target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="h-6">
                                 <path fill="currentColor"
@@ -275,7 +278,7 @@ const InstructorMyProfile = () => {
                                 </path>
                             </svg>
                         </a>
-                        <a class="text-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds Facebook" href=""
+                        <a class="profiletext-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds Facebook" href=""
                             target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="h-6">
                                 <path fill="currentColor"
@@ -283,7 +286,7 @@ const InstructorMyProfile = () => {
                                 </path>
                             </svg>
                         </a>
-                        <a class="text-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds Instagram" href=""
+                        <a class="profiletext-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds Instagram" href=""
                             target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-6">
                                 <path fill="currentColor"
@@ -291,7 +294,7 @@ const InstructorMyProfile = () => {
                                 </path>
                             </svg>
                         </a>
-                        <a class="text-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds Twitter" href=""
+                        <a class="profiletext-gray-700 hover:text-orange-600" aria-label="Visit TrendyMinds Twitter" href=""
                             target="_blank">
                             <svg class="h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <path fill="currentColor"
@@ -302,7 +305,7 @@ const InstructorMyProfile = () => {
                     </div>
 
 
-  <div class="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
+  <div class="w-full p-6 bg-white rounded-lg profileshadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
           <h2 class="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Change Password
           </h2>

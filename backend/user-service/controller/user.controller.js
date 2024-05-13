@@ -1,5 +1,9 @@
 const asyncHandler = require("express-async-handler");
+
 const User = require("../models/user.model");
+const Enrollment = require("../models/enrollmentModel");
+const Course = require("../models/courseModel");
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Token = require("../models/token.model");
@@ -136,7 +140,7 @@ exports.loginUser = async (req, res) => {
   }
 
   // Check if password is correct
-  const passwordIsCorrect = await bcrypt.compare(password, user.password);
+  // const passwordIsCorrect = await bcrypt.compare(password, user.password);
   
   if (password=== user.password) {
     
@@ -275,7 +279,7 @@ exports.forgotPassword = async (req, res) => {
   
     if (!user) {
       res.status(404);
-      res.json("User does not exist");
+      res.status(200).json({success: true, message: "User does not exist"});
     }
 
     // Delete token if it exists in DB
@@ -283,7 +287,7 @@ exports.forgotPassword = async (req, res) => {
     if (token) {
       await token.deleteOne();
     }
-  
+
     // Create Reset Token
     let resetToken = crypto.randomBytes(32).toString("hex") + user.id;
     console.log(resetToken);
@@ -301,10 +305,10 @@ exports.forgotPassword = async (req, res) => {
       createdAt: Date.now(),
       expiresAt: Date.now() + 40 * (60 * 1000), // fourty minutes
     }).save();
-  
+   
     // Construct Reset Url
-    const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
-  
+    const resetUrl = `${process.env.FRONTEND_URL}/resetpassword/${hashedToken}`;
+
     // Reset Email
     const message = `
         <h2>Hello ${user.name}</h2>
@@ -321,18 +325,17 @@ exports.forgotPassword = async (req, res) => {
     const sent_from = process.env.EMAIL_USER;
   
     try {
-        const sent = await sendEmail(subject, message, send_to, sent_from);
-        if(sent){
-          res.status(200).json({ success: true, message: "Reset Email Sent" });
-        }else{
-          res.status(200).json({ success: false, message: "Email not Sent. error"});
-        }
-      } catch (error) {
-        res.status(500);
-        // res.json("Email not sent, please try again");
-        res.status(200).json({ success: false, message: "Email not Sent. error" , error});
-        console.log(error)
-      }   
+      sendEmail(subject, message, send_to, sent_from, null, (sent) => {
+          if (sent) {
+              res.status(200).json({ success: true, message: "Reset Email Sent" });
+          } else {
+              res.status(200).json({ success: false, message: "Email not Sent" });
+          }
+      });
+  } catch (error) {
+      res.status(500).json({ success: false, message: "Email not Sent. Error", error });
+      console.log(error);
+  }
   };
 
 
@@ -346,19 +349,22 @@ exports.resetPassword = async (req, res) => {
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
-  
+
+
     // fIND tOKEN in DB
     const userToken = await Token.findOne({
-      token: hashedToken,
+      token: resetToken,
       expiresAt: { $gt: Date.now() },
     });
   
+    
     if (!userToken) {
       res.status(404);
       res.json("Invalid or Expired Token");
     }
-
+    
     // Find user
+    
     const user = await User.findOne({ _id: userToken.userId });
     user.password = password;
     await user.save();
@@ -367,9 +373,26 @@ exports.resetPassword = async (req, res) => {
     });
   };
 
-
-
-
+    exports.getEnrolledCourses = asyncHandler(async (req, res) => {
+      // Extract user ID from JWT token
+      const userId = req.user.id;
+    
+      try {
+        // Find enrollments for the user
+        const enrollments = await Enrollment.find({ uid: userId });
+    
+        // Extract course IDs from enrollments
+        const courseIds = enrollments.map(enrollment => enrollment.cid);
+    
+        // Find courses with the extracted course IDs
+        const enrolledCourses = await Course.find({ _id: { $in: courseIds } });
+    
+        res.status(200).json({ success: true, enrolledCourses });
+      } catch (error) {
+        console.error("Error fetching enrolled courses:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+      }
+    });
 
 
 
