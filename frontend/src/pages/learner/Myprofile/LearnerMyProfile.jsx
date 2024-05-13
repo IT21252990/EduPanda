@@ -98,7 +98,7 @@ const LearnerMyProfile = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Handle Image upload
     if (
       profileImage &&
@@ -108,27 +108,30 @@ const LearnerMyProfile = () => {
     ) {
       const image = new FormData();
       image.append("file", profileImage);
-      image.append("cloud_name", "dqwgbpf2d");
-      image.append("upload_preset", "cqwykn6c");
-
+      image.append("upload_preset", "cqwykn6c"); // Removed 'cloud_name', it's already in the URL
+  
       try {
-        // First save image to cloudinary
+        // First save image to Cloudinary
         const response = await fetch(
           "https://api.cloudinary.com/v1_1/dqwgbpf2d/image/upload",
-          { method: "post", body: image }
+          { method: "POST", body: image }
         );
         const imgData = await response.json();
-        setImageURL(imgData.url.toString());
-
+        const imageURL = imgData.secure_url; // Use 'secure_url' for HTTPS
+  
         // Update user data
-        const updatedData = { ...formData, photo: imgData.url.toString() };
-        const responseUpdate = await axios.put('http://localhost:5002/api/users/updateuser', updatedData, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+        const updatedData = { ...formData, photo: imageURL };
+        const responseUpdate = await axios.put(
+          'http://localhost:5002/api/users/updateuser',
+          updatedData,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
           }
-        });
-        
+        );
+  
         setUser(responseUpdate.data);
         setShowUpdateForm(false);
         toast.success('User details updated successfully');
@@ -136,9 +139,11 @@ const LearnerMyProfile = () => {
         console.error('Error updating user details:', error);
         toast.error('Failed to update user details');
       }
+    } else {
+      toast.error('Please select a valid image file (JPEG/JPG/PNG)');
     }
   };
-
+  
 
   return (
     <div className="flex flex-col w-screen h-full top-0">
@@ -185,7 +190,7 @@ const LearnerMyProfile = () => {
                   <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                   <div className="profile">
                     <h2 className="updateprofile">Update Profile</h2>
-                    <form onSubmit={handleFormSubmit}>
+                    <form method='post'>
                       <div className="mb-4">
                         <label className="block profiletext-gray-700 text-sm font-bold mb-2" htmlFor="name">
                           Name
@@ -241,6 +246,7 @@ const LearnerMyProfile = () => {
                         <button
                           type="submit"
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:profileshadow-outline"
+                          onClick={handleFormSubmit}
                         >
                           Update Profile
                         </button>

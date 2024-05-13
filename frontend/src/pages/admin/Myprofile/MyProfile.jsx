@@ -187,7 +187,7 @@ const MyAccount = () => {
                   <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
                   <div className="profile">
                     <h2 className="updateprofile">Update Profile</h2>
-                    <form onSubmit={handleFormSubmit}>
+                    <form method='post'>
                       <div className="mb-4">
                         <label className="block profiletext-gray-700 text-sm font-bold mb-2" htmlFor="name">
                           Name
@@ -243,6 +243,7 @@ const MyAccount = () => {
                         <button
                           type="submit"
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:profileshadow-outline"
+                          onClick={handleFormSubmit}
                         >
                           Update Profile
                         </button>
