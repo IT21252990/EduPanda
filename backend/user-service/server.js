@@ -8,7 +8,7 @@ const path = require("path");
 
 const userRoute = require("./routes/user.route");
 const errorHandler = require("./middleware/error.middleware");
-
+ 
 const app = express();
 // Middlewares
 app.use(express.json());

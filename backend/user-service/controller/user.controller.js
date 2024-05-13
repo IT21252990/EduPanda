@@ -55,6 +55,16 @@ exports.generateToken = (payload) => {
 };
 
 // Signup controller
+// Backend Changes
+
+// Add a function to generate a random OTP
+const generateOTP = () => {
+  return Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+};
+
+// Backend Changes
+
+// Modify registerrUser controller to generate and send OTP
 exports.registerrUser = async (req, res) => {
   const { name, email, password, phone } = req.body;
 
@@ -63,65 +73,175 @@ exports.registerrUser = async (req, res) => {
       let user = await User.findOne({ email });
   
       if (user) {
+        if(user.isVerified){
           return res.status(400).json({ success: false, message: 'User already exists' });
+        }
       }
-  
-      // Hash the password
-      // const hashedPassword = await bcrypt.hash(password, 10); // Use bcrypt to hash the password
-  
-      // Create new user with hashed password
-      user = new User({
-          name,
-          email,
-          password,//: hashedPassword,// Store the hashed password in the database
-          phone
+
+      // Generate OTP
+      const otp = generateOTP(); // Assuming you have a function generateOTP()
+
+      // Send OTP to user's email
+      const subject = 'Verification Code';
+      const message = `Your OTP is: ${otp}`;
+      const send_to = email;
+      const sent_from = process.env.EMAIL_USER;
+      const reply_to = process.env.EMAIL_USER;
+
+      sendEmail(subject, message, send_to, sent_from, reply_to, async (success) => {
+        if (success) {
+          // Save the OTP to the database
+          user = new User({
+            name,
+            email,
+            password,
+            phone,
+            otp
+          });
+
+          await user.save();
+
+          res.status(201).json({ success: true , message: 'OTP sent successfully' });
+        } else {
+          res.status(500).json({ success: false, message: 'Failed to send OTP' });
+        }
       });
-  
-      await user.save();
-  
-      res.status(201).json({ success: true , message: 'User registered successfully' });
   } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
+  }
+};
+
+// Add a new controller to verify OTP
+exports.verifyOTP = async (req, res) => {
+  const { email, otp } = req.body;
+
+  try {
+    // Find user by email and OTP
+    const user = await User.findOne({ email, otp });
+
+    if (user) {
+      // Clear OTP from the database once verified
+      await User.updateOne({ email }, { $unset: { otp: 1 } });
+      
+      // Mark the user as verified
+      await User.updateOne({ email }, { $set: { isVerified: true } });
+
+      res.status(200).json({ success: true, message: 'OTP verified successfully' });
+    } else {
+      res.status(400).json({ success: false, message: 'Invalid OTP' });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 };
 
 exports.registerrInstructor = async (req, res) => {
-  const { name, email, password, phone } = req.body;
-
-  try {
-      // Check if user already exists
-      let user = await User.findOne({ email });
+    const { name, email, password, phone } = req.body;
   
-      if (user) {
-          return res.status(400).json({ success: false, message: 'User already exists' });
-      }
+    try {
+        // Check if user already exists
+        let user = await User.findOne({ email });
+    
+        if (user) {
+          if(user.isVerified){
+            return res.status(400).json({ success: false, message: 'User already exists' });
+          }
+        }
   
-      // Hash the password
-      // const hashedPassword = await bcrypt.hash(password, 10); // Use bcrypt to hash the password
+        // Generate OTP
+        const otp = generateOTP(); // Assuming you have a function generateOTP()
   
-      // Create new user with hashed password
-      user = new User({
-          name,
-          email,
-          password, //: hashedPassword,// Store the hashed password in the database
-          phone,
-          role: 'instructor',
-          isInstructor: true
-      });
+        // Send OTP to user's email
+        const subject = 'Verification Code';
+        const message = `Your OTP is: ${otp}`;
+        const send_to = email;
+        const sent_from = process.env.EMAIL_USER;
+        const reply_to = process.env.EMAIL_USER;
   
-      await user.save();
+        sendEmail(subject, message, send_to, sent_from, reply_to, async (success) => {
+          if (success) {
+            // Save the OTP to the database
+            user = new User({
+              name,
+              email,
+              password,
+              phone,
+              otp,
+              role: 'instructor',
+              isInstructor: true
+            });
   
-      res.status(201).json({ success: true , message: 'User registered successfully' });
-  } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-  }
-};
-
-
+            await user.save();
+  
+            res.status(201).json({ success: true , message: 'OTP sent successfully' });
+          } else {
+            res.status(500).json({ success: false, message: 'Failed to send OTP' });
+          }
+        });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+  };
 
 // Signin controller
+// exports.loginUser = async (req, res) => {
+//   const { email, password } = req.body;
+  
+//   // Validate Request
+//   if (!email || !password) {
+//     res.status(400);
+//     console.log("Please add email and password");
+//   }
+
+//   // Check if user exists
+//   const user = await User.findOne({ email });
+  
+//   if (user) {
+//     if(user.isVerified){
+//       if (password=== user.password) {
+    
+//   // Generate Token
+//         const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
+        
+//         // Send HTTP-only cookie
+//         res.cookie("token", token, {
+//           path: "/",
+//           httpOnly: true,
+//           expires: new Date(Date.now() + 1000 * 86400), // 1 day
+//           sameSite: "none",
+//           secure: true,
+//         });
+
+//         // Modify the part in your loginUser function that sends the response
+//           const { id, name, email, role, isDoctor } = user; // Include role here
+//           res.status(200).json({
+//             id,
+//             name,
+//             email,
+//             role, // Send role to the frontend
+//             isDoctor,
+//             token,
+//           });
+
+//         } else {
+//           res.status(400);
+//           res.json("Invalid email or password");
+//         }
+//     }
+//   } else{
+//     res.status(400);
+//     res.json("User not found, please signup");
+//   }
+
+//   // Check if password is correct
+//   // const passwordIsCorrect = await bcrypt.compare(password, user.password);
+  
+  
+// };
+
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
   
@@ -174,8 +294,6 @@ exports.loginUser = async (req, res) => {
     res.json("Invalid email or password");
   }
 };
-
-
 
 
 // Profile controller
@@ -373,7 +491,8 @@ exports.resetPassword = async (req, res) => {
     });
   };
 
-    exports.getEnrolledCourses = asyncHandler(async (req, res) => {
+
+exports.getEnrolledCourses = asyncHandler(async (req, res) => {
       // Extract user ID from JWT token
       const userId = req.user.id;
     
@@ -392,7 +511,49 @@ exports.resetPassword = async (req, res) => {
         console.error("Error fetching enrolled courses:", error);
         res.status(500).json({ success: false, message: "Server Error" });
       }
-    });
+    });    
+
+
+    exports.getInstructorCourses = async (req, res) => {
+      try {
+        // Assuming req.user.id contains the ID of the logged-in instructor
+        const instructorId = req.user.id;
+    
+        // Find courses where the instructor ID matches the logged-in instructor's ID
+        const courses = await Course.find({ instructor: instructorId })
+          .select('title') // Select only the 'title' field
+          .exec();
+    
+        // Extract and log the titles of the courses
+        const titles = courses.map(course => course.title);
+        console.log(titles);
+    
+        // Return the courses' titles belonging to the instructor
+        res.status(200).json({ success: true, titles });
+      } catch (err) {
+        // Handle error
+        console.error('Error retrieving instructor courses:', err);
+        res.status(500).json({ success: false, message: 'Server Error' });
+      }
+    }; 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
