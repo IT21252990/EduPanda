@@ -35,22 +35,82 @@ router.delete('/:id', deleteEnroll);
 let endpointSecret;
 
 
+sendEmail = async (body) => {
+    const emailData = {
+      to: body.email,
+      subject: "Course Purchased",
+      text: `The course ${body.courseTitle} has been purchased.`
+    };
+    
+    console.log(JSON.stringify(emailData));
+    const emailResponse = await fetch(
+      "http://localhost:9123/send-email",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(emailData)
+      }
+    );
+
+
+    if (!emailResponse.ok) {
+      const errorText = await emailResponse.text();
+      throw new Error(`Failed to send email: ${errorText}`);
+    }
+  };
+
+  const sendSMS = async (body) => {
+    const smsData = {
+      to: '+94720706833',
+      text: `The course ${body.courseTitle} has been purchased.`
+    };
+
+    console.log(JSON.stringify(smsData));
+    const smsResponse = await fetch(
+      "http://localhost:3001/send-sms",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(smsData)
+      }
+    );
+
+
+    if (!smsResponse.ok) {
+      const errorText = await smsResponse.text();
+      throw new Error(`Failed to send sms: ${errorText}`);
+    }
+  };
+
+
 
 
 // Success handler for Stripe checkout session
 const handleCheckoutSuccess = async (customer, data) => {
-    const { uid, cid } = customer.metadata;
+    const { uid, cid, courseTitle } = customer.metadata;
+    const pid = data.payment_intent;
+    const email = customer.email;
+    const emailBody = {email, courseTitle}
     console.log("customerHandle", customer)
     console.log("customerMetadata", customer.metadata)
-    console.log("uid", uid, "cid", cid)
+    console.log("uid", uid, "cid", cid, "pid", pid)
 
     const newEnrollment = new Enrollment({
         uid: uid,
-        cid: cid
+        cid: cid,
+        payment: pid,
+        paymentType: "Card"
+
     });
 
     try {
         const savedOrder = await newEnrollment.save();
+        sendEmail(emailBody);
+        sendSMS(emailBody);
 
         console.log("SavedOrder", savedOrder);
     } catch (error) {

@@ -15,6 +15,7 @@ import NewCourses from './pages/admin/courses/NewCourses';
 import UpdatedCourses from './pages/admin/courses/UpdatedCourses';
 import Users from './pages/admin/users/users';
 import Finance from './pages/admin/finance/Finance';
+import Analytics from './pages/admin/analytics/Analytics';
 
 //Instructor
 import InstructorHome from './pages/instructor/InstructorHome';
@@ -44,6 +45,7 @@ import InstructorReg from './pages/Auth/InstructorReg';
 import LearnerHome from './pages/learner/Home'
 import Success from './pages/learner/Success'
 import Cancel from './pages/learner/Cancel'
+import CourseViewPage from './pages/learner/CourseViewPage'
 
 
 function App() {
@@ -72,6 +74,7 @@ function App() {
           <Route path="/UpdatedCourses" element={<UpdatedCourses />} />
           <Route path="/Users" element={<Users />} />
           <Route path="/Finance" element={<Finance />} />
+          <Route path="/Analytics" element={<Analytics/>} />
         
 
           {/* Instructor */}
@@ -90,6 +93,7 @@ function App() {
           <Route path="/Home" element={<LearnerHome />} />
           <Route path="/Success" element={<Success />} />
           <Route path="/Cancel" element={<Cancel />} />
+          <Route path="/CourseViewPage" element={<CourseViewPage />} />
 
         </Routes>
       </BrowserRouter>

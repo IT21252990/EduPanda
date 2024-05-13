@@ -47,15 +47,16 @@ export default function Users() {
                     <button
                       type="button"
                       onClick={toggleInstructorDropdown}
-                      className="px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      className="text-white  bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       View Deatails
                     </button>
                   </div>
                 </div>
+                <tr> 
                 {isInstructorDropdownOpen && <InstructorDetails />}
-
-                <div className="flex items-center justify-center p-5 px-32 border-t-2 dark:bg-gray-800 dark:border-gray-700 ">
+                </tr>
+                <div className="flex items-center justify-center dark:bg-gray-800 p-5 px-32 border-t-2 dark:border-gray-700 ">
                   <div className="flex md:order-2 space-x-80 rtl:space-x-reverse">
                     <div className="block mr-40 text-xl font-bold text-gray-900 md:p-0 dark:text-white ">
                       Learners
@@ -69,7 +70,9 @@ export default function Users() {
                     </button>
                   </div>
                 </div>
+                <tr> 
                 {isLearnerDropdownOpen && <LearnerDetails />}
+                </tr>
               </table>
             </div>
           </div>
