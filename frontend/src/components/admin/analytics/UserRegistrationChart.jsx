@@ -22,16 +22,17 @@ const UserRegistrationChart = ({ registrations }) => {
       type: 'line',
       data: {
         labels: Object.keys(registrationsByDate),
+        
         datasets: [{
           label: 'Learners',
           data: Object.values(registrationsByDate).map(entry => entry.learner),
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          backgroundColor: 'rgba(75, 192, 192, 1)',
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 1
         }, {
           label: 'Instructors',
           data: Object.values(registrationsByDate).map(entry => entry.instructor),
-          backgroundColor: 'rgba(255, 159, 64, 0.2)',
+          backgroundColor: 'rgba(255, 159, 64, 1)',
           borderColor: 'rgba(255, 159, 64, 1)',
           borderWidth: 1
         }]
@@ -42,13 +43,28 @@ const UserRegistrationChart = ({ registrations }) => {
             beginAtZero: true,
             title: {
               display: true,
-              text: 'Number of Registrations'
+              text: 'Number of Registrations',
+              color: '#FFFFFF' 
+            },
+            ticks: {
+              color: '#FFFFFF'
             }
           },
           x: {
             title: {
               display: true,
-              text: 'Date'
+              text: 'Date',
+              color:  '#FFFFFF'
+            },
+            ticks: {
+              color: '#FFFFFF'
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#FFFFFF'
             }
           }
         }
@@ -58,7 +74,12 @@ const UserRegistrationChart = ({ registrations }) => {
     return () => myChart.destroy();
   }, [registrations]);
 
-  return <canvas ref={chartRef} width="400" height="400"></canvas>;
+  return (
+    <div className="text-white">
+      <p className="text-xl font-bold mb-4">User Registrations </p>
+      <canvas ref={chartRef} width="400" height="400"></canvas>
+    </div>
+  )
 };
 
 export default UserRegistrationChart;

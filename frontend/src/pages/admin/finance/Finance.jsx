@@ -35,7 +35,10 @@ export default function Finance() {
         </div>
 
         <div className="flex-1 justify-center items-center mt-16">
-        <RevenueChart enrollments={enrollments} />
+          <div className="w-2/3 mx-auto">
+            <RevenueChart enrollments={enrollments} />
+          </div>
+
           <form className="max-w-md mx-auto my-3">
             <label
               for="default-search"
@@ -77,9 +80,9 @@ export default function Finance() {
             </div>
           </form>
 
-          <div className="relative ml-16 mb-8 shadow-md rounded-lg sm:rounded-lg ">
-            <table className="w-full mx-auto text-sm text-left rounded-lg rtl:text-right text-gray-500 dark:text-gray-400">
-              <caption className="p-5 text-xl font-bold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+          <div className="relative ml-7 16 mb-8 shadow-md rounded-lg sm:rounded-lg dark:bg-gray-800 ">
+            <table className="w-full mx-auto text-sm text-left rounded-lg rtl:text-right text-gray-500 dark:text-gray-400 dark:bg-gray-800">
+              <caption className="p-5 text-xl font-bold text-left rtl:text-right text-gray-900 dark:text-white ">
                 All transactions
               </caption>
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

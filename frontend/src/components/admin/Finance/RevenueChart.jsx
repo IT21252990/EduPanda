@@ -71,7 +71,9 @@ export default function RevenueChart({ enrollments }) {
   };
 
   return (
-    <div className=" w-3/4 ml-36 bg-white rounded-lg shadow dark:bg-gray-800 m-4 p-4 md:p-6">
+    // <div className=" w-3/4 ml-36 bg-white rounded-lg shadow dark:bg-gray-800 m-4 p-4 md:p-6">
+    <div className="w-full mx-6 bg-white rounded-lg shadow dark:bg-gray-800  md:p-6">
+
       <canvas ref={chartRef}></canvas>
     </div>
   );

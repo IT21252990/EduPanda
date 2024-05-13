@@ -25,6 +25,7 @@ const CategoryDistributionChart = ({ enrollments }) => {
       type: 'pie',
       data: {
         labels: Object.keys(categoryCounts),
+        
         datasets: [{
           data: Object.values(categoryCounts),
           backgroundColor: [
@@ -36,6 +37,15 @@ const CategoryDistributionChart = ({ enrollments }) => {
             'rgba(255, 159, 64, 0.7)'
           ]
         }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            labels: {
+              color: '#9CA3AF' 
+            }
+          }
+        }
       }
     });
 
@@ -50,9 +60,11 @@ const CategoryDistributionChart = ({ enrollments }) => {
   }, [enrollments]);
 
   return (
-    <div>
+    <div className="text-white">
+      <p className="text-xl font-bold mb-4">Course Category</p>
       <canvas id="categoryDistributionChart" width="400" height="400"></canvas>
     </div>
+  
   );
 };
 
