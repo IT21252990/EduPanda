@@ -1,11 +1,22 @@
 import React, { useState , useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function NavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
 
-
+  const handleLogout = async () => {
+    try {
+      await axios.get('http://localhost:5002/api/users/logout');
+      // Clear token from localStorage
+      localStorage.removeItem('token');
+      // Redirect the user to the home page or any other desired destination
+      window.location.href = '/'; // Redirect to the home page
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
   
   return (
     <div>
@@ -58,7 +69,7 @@ function NavBar() {
               
               <li>
                 <a
-                  href="/instructor_profile"
+                  href="/learner_profile"
                   className="text-gray-900 dark:text-white hover:underline"
                 >
                   Profile
@@ -72,7 +83,11 @@ function NavBar() {
               className="flex items-center space-x-6 rtl:space-x-reverse"
             >
               <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <Link className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700 dark:focus:ring-red-600">
+               
+                <Link
+                  className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={handleLogout}
+                >
                   Log Out
                 </Link>
               </div>

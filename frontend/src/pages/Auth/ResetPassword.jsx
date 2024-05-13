@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import { useParams, useNavigate } from "react-router-dom";
 import logo from "./logo.png";
-
+import '../user/usermanage.css'
 
 const ResetPassword = () => {
     const navigate = useNavigate();

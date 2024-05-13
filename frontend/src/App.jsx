@@ -38,11 +38,12 @@ import ForgotPassword from './pages/Auth/ForgotPassword';
 import InstructorMyProfile from './pages/instructor/Myprofile/InstructorMyProfile';
 import InstructorReg from './pages/Auth/InstructorReg';
 
-import MyProfile from './pages/Myprofile/MyProfile';
+// import MyProfile from './pages/Myprofile/MyProfile';
 
 import LearnerHome from './pages/learner/Home'
 import Success from './pages/learner/Success'
 import Cancel from './pages/learner/Cancel'
+import LearnerMyProfile from './pages/learner/Myprofile/LearnerMyProfile';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="/instructor/register" element={<InstructorReg />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/instructor_profile" element={<InstructorMyProfile />} />
+          <Route path="/learner_profile" element={<LearnerMyProfile />} />
           <Route path="/resetpassword/:resetToken" element={<ResetPassword />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
 

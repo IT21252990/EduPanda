@@ -24,7 +24,7 @@ function Home() {
     }, []);
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col w-screen h-full top-0">
             <NavBar />
             <h2 className="text-2xl font-bold mb-4">All Courses</h2>
             <div className="flex-grow flex justify-center items-center">

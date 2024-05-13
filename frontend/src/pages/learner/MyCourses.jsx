@@ -24,7 +24,7 @@ function MyCourses() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col w-screen h-full top-0">
       <NavBar />
       <div className="flex-grow flex justify-center items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">

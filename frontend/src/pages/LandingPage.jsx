@@ -1,5 +1,6 @@
 import React from 'react';
-import logo from '/edupanda.png'
+import logo from '../../public/edupanda.png'
+import './user/usermanage.css'
 import { Link } from "react-router-dom";
 
 
