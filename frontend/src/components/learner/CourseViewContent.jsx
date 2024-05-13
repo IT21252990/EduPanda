@@ -6,7 +6,7 @@ const CourseViewContent = ({ course }) => {
   useEffect(() => {
     const fetchCourseDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5001/api/courses/${CID}`, {
+        const response = await fetch(`http://localhost:5000/api/courses/${CID}`, {
           method: 'GET'
         });
 

@@ -38,7 +38,7 @@ const CourseCard = ({ course }) => {
                 }
 
                 // Fetch course details
-                const courseResponse = await fetch(`http://localhost:5001/api/courses/${course}`, {
+                const courseResponse = await fetch(`http://localhost:5000/api/courses/${course}`, {
                     method: 'GET'
                 });
                 if (courseResponse.ok) {
