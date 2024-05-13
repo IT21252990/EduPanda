@@ -41,7 +41,7 @@ function MyCourses() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen w-screen">
+    <div className="flex flex-col w-screen h-full top-0">
       <NavBar />
       <div className="container mx-auto my-8 px-4">
         <h2 className="text-3xl font-bold mb-4">My Courses</h2>

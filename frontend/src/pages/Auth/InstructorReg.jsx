@@ -3,6 +3,7 @@ import logo from "./logo.png";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import { Link, useNavigate } from "react-router-dom";
+import '../user/usermanage.css'
 
 const InstructorReg = () => {
   const navigate = useNavigate();

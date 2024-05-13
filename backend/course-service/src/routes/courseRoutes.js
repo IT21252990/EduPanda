@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-    createCourse,getAllCourses,getCourseById,updateCourse,deleteCourse
+    createCourse,getAllCourses,getCourseById,updateCourse,deleteCourse,getAllCoursesByInstructor
 } = require("../controllers/courseController");
 
 const router = express.Router();
@@ -20,5 +20,8 @@ router.patch("/:id", updateCourse);
 
 //GET a single course
 router.get("/:id", getCourseById);
+
+//Get all courses by instructor
+router.get("/instructor/:id", getAllCoursesByInstructor);
 
 module.exports = router;

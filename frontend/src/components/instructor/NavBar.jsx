@@ -1,5 +1,7 @@
 import React, { useState , useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 
 function NavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,6 +24,40 @@ function NavBar() {
     }
   };
 
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [user, setUser] = useState(null);
+  const [profileImage, setProfileImage] = useState("");
+  const [imageURL, setImageURL] = useState(""); // Added state to hold image URL
+
+  const [formData, setFormData] = useState({
+    name: '',
+    bio: '',
+    phone: '',
+    photo: ''
+  });
+
+  useEffect(() => {
+    if (token) {
+      axios.get('http://localhost:5002/api/users/getuser', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        setUser(response.data);
+        setFormData({
+          name: response.data.name,
+          bio: response.data.bio,
+          phone: response.data.phone,
+          photo: profileImage ? imageURL : response.data.photo,
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching user profile:', error);
+      });
+    }
+  }, [token]);
+
   
   return (
     <div>
@@ -36,9 +72,13 @@ function NavBar() {
               EduPanda
             </span>
           </a>
-          <div className="flex items-center space-x-6 rtl:space-x-reverse text-sm  text-gray-500 dark:text-white">
-    
-             Welcome Tutor !
+          <div className="hidden md:flex flex-row gap-2 items-center space-x-6 rtl:space-x-reverse text-sm  text-gray-500 dark:text-white">
+          <img
+                    src={formData.photo} // Update src attribute to use formData
+                    className="w-8 h-8 bg-gray-300 rounded-full shrink-0 "
+                    alt="User Profile"
+                  />
+             <h1 className="font-bold text-gray-400">Welcome {formData.name}</h1>
           </div>
         </div>
       </nav>
@@ -95,7 +135,10 @@ function NavBar() {
               className="flex items-center space-x-6 rtl:space-x-reverse"
             >
               <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <Link className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <Link
+                  className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={handleLogout}
+                >
                   Log Out
                 </Link>
               </div>
@@ -245,6 +288,16 @@ function NavBar() {
                   <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
                 </a>
               </li>
+              <li className="flex h-20 items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <div className="ml-5 flex flex-row gap-2 items-center space-x-6 rtl:space-x-reverse text-sm  text-gray-500 dark:text-white">
+          <img
+                    src={formData.photo} // Update src attribute to use formData
+                    className="w-8 h-8 bg-gray-300 rounded-full  "
+                    alt="User Profile"
+                  />
+             <h1 className="font-bold text-gray-400">{formData.name}</h1>
+          </div>
+              </li>
               <li>
                 <a
                   href="/"
@@ -262,8 +315,13 @@ function NavBar() {
                       clipRule="evenodd"
                     />
                   </svg>
+                  <Link
+                  className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={handleLogout}
+                >
+               <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
 
-                  <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
+                </Link>
                 </a>
               </li>
             </ul>
