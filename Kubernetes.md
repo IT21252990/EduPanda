@@ -28,7 +28,7 @@ spec:
           image: user-service:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 5002
 ```
 
 - Create a Kubernetes service YAML file for each service. This file defines the service type, port, and target port. Here's an example YAML file for the user-service:
@@ -45,35 +45,20 @@ spec:
     app: user-service
   ports:
     - protocol: TCP
-      port: 9120
-      targetPort: 9120
+      port: 5002
+      targetPort: 5002
   type: LoadBalancer
-```
-
-- Create a Kubernetes secret YAML file for each service that needs access to sensitive information, such as database credentials. Here's an example YAML file for the mongo-secret:
-
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mongo-secret
-type: Opaque
-data:
-  MONGO_URI: 'mongodb://mongo:27017' # Replace with your MongoDB URI
-  MONGO_DB: 'user-service' # Replace with your MongoDB database name
-  MONGO_COLLECTION: 'users' # Replace with your MongoDB collection name
-  PORT: '8080' # Replace with your service port
 ```
 
 - Apply each YAML file using the kubectl apply command. For example:
 
 ```bash
-   kubectl apply -f kubernetes/user-service
    kubectl apply -f kubernetes/admin-service
-   kubectl apply -f kubernetes/product-service
+   kubectl apply -f kubernetes/course-service
    kubectl apply -f kubernetes/email-service
-   kubectl apply -f kubernetes/order-service
-   kubectl apply -f kubernetes/frontend-service
+   kubectl apply -f kubernetes/learner-service
+   kubectl apply -f kubernetes/sms-service
+   kubectl apply -f kubernetes/user-service
 ```
 
 - To view the status of your Kubernetes cluster, use the kubectl get command. For example:
