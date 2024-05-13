@@ -1,5 +1,17 @@
 const User = require('../models/userModel');
 
+//@desc View all users
+//@route GET /api/users
+//@access public
+const getAllUsers = async (req, res) => {
+    try {
+        const instructors = await User.find();
+        res.json(instructors);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 //@desc View all instructors
 //@route GET /api/users/instructors
 //@access public
@@ -25,6 +37,7 @@ const getAllLearners = async (req, res) => {
 };
 
 module.exports = {
+    getAllUsers,
     getAllInstructors,
     getAllLearners
 };

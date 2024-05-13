@@ -15,6 +15,7 @@ import NewCourses from './pages/admin/courses/NewCourses';
 import UpdatedCourses from './pages/admin/courses/UpdatedCourses';
 import Users from './pages/admin/users/users';
 import Finance from './pages/admin/finance/Finance';
+import Analytics from './pages/admin/analytics/Analytics';
 
 //Instructor
 import InstructorHome from './pages/instructor/InstructorHome';
@@ -72,6 +73,7 @@ function App() {
           <Route path="/UpdatedCourses" element={<UpdatedCourses />} />
           <Route path="/Users" element={<Users />} />
           <Route path="/Finance" element={<Finance />} />
+          <Route path="/Analytics" element={<Analytics/>} />
         
 
           {/* Instructor */}

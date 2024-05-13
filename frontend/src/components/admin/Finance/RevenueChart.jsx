@@ -5,10 +5,11 @@ export default function RevenueChart({ enrollments }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (enrollments.length > 0) {
+    if (enrollments && enrollments.length > 0) {
       renderChart();
     }
   }, [enrollments]);
+  
 
   const renderChart = () => {
     const ctx = chartRef.current.getContext("2d");
