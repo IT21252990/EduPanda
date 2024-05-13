@@ -1,5 +1,9 @@
 const asyncHandler = require("express-async-handler");
+
 const User = require("../models/user.model");
+const Enrollment = require("../models/enrollmentModel");
+const Course = require("../models/courseModel");
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Token = require("../models/token.model");
@@ -369,7 +373,26 @@ exports.resetPassword = async (req, res) => {
     });
   };
 
-
+    exports.getEnrolledCourses = asyncHandler(async (req, res) => {
+      // Extract user ID from JWT token
+      const userId = req.user.id;
+    
+      try {
+        // Find enrollments for the user
+        const enrollments = await Enrollment.find({ uid: userId });
+    
+        // Extract course IDs from enrollments
+        const courseIds = enrollments.map(enrollment => enrollment.cid);
+    
+        // Find courses with the extracted course IDs
+        const enrolledCourses = await Course.find({ _id: { $in: courseIds } });
+    
+        res.status(200).json({ success: true, enrolledCourses });
+      } catch (error) {
+        console.error("Error fetching enrolled courses:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+      }
+    });
 
 
 

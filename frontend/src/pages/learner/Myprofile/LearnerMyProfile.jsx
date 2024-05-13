@@ -145,6 +145,35 @@ const LearnerMyProfile = () => {
   };
   
 
+
+
+
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEnrolledCourses = async () => {
+      try {
+        // Make a GET request to your backend API endpoint
+        const response = await axios.get('http://localhost:5002/api/users/enrolledCourses', {
+          // Include the JWT token in the request headers
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        });
+
+        // Set the enrolled courses state with the data from the response
+        setEnrolledCourses(response.data.enrolledCourses);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching enrolled courses:', error);
+      }
+    };
+
+    fetchEnrolledCourses();
+  }, []);
+
+
   return (
     <div className="flex flex-col w-screen h-full top-0">
     <div className="flex flex-col grow-0">
@@ -179,6 +208,67 @@ const LearnerMyProfile = () => {
                   <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{user.email}</span>
                   <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{formData.phone}</span>
                 </div>
+
+
+
+
+                <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700" style={{ marginTop: '20px' }}>
+    <div class="flex items-center justify-between mb-4">
+        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Enrolled Courses</h5>
+        <a href="/MyCourses" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+            View
+        </a>
+   </div>
+   <div class="flow-root">
+   {enrolledCourses.length === 0 ? (
+        <p>No courses enrolled yet.</p>
+      ) : (
+        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+          {enrolledCourses.map(course => (
+            <li key={course._id}>
+                <div class="flex items-center">
+                    
+                    <div class="flex-1 min-w-0 ms-4">
+                    <p className="text-sm font-medium text-gray-900 truncate dark:text-white" style={{ margin: '10px' }}>
+                        {course.title}
+                        </p>
+                        
+                    </div>
+                    
+                </div>
+            </li>
+
+
+))}
+        </ul>
+       )}
+</div>
+</div>
+
+
+                {/* <div>
+      <h2>Enrolled Courses</h2>
+      {enrolledCourses.length === 0 ? (
+        <p>No courses enrolled yet.</p>
+      ) : (
+        <ul>
+          {enrolledCourses.map(course => (
+            <li key={course._id}>{course.title}</li>
+          ))}
+        </ul>
+      )}
+    </div> */}
+
+
+
+
+
+
+
+
+
+
+
               </div>
             </div>
             <div className="col-span-4 sm:col-span-7">

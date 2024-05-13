@@ -1,5 +1,6 @@
 import React, { useState , useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function NavBar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -95,7 +96,10 @@ function NavBar() {
               className="flex items-center space-x-6 rtl:space-x-reverse"
             >
               <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <Link className="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <Link
+                  className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={handleLogout}
+                >
                   Log Out
                 </Link>
               </div>
@@ -262,8 +266,13 @@ function NavBar() {
                       clipRule="evenodd"
                     />
                   </svg>
+                  <Link
+                  className="text-white bg-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={handleLogout}
+                >
+               <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
 
-                  <span className="flex-1 ms-3 whitespace-nowrap">Log Out</span>
+                </Link>
                 </a>
               </li>
             </ul>
