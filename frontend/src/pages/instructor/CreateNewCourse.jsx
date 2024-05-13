@@ -1,8 +1,48 @@
 import React, { useState , useEffect } from "react";
+import Swal from "sweetalert2";
 import NavBar from "../../components/instructor/NavBar";
 import Footer from "../../components/instructor/Footer";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import bg from "../../assets/coursemanagementbg.jpg"
+
+
 
 function CreateNewCourse() {
+
+  const navigate = useNavigate();
+
+
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [userID , setUserID] = useState(null);
+ 
+  console.log(userID);
+
+  useEffect(() => {
+    if (token) {
+      axios.get('http://localhost:5002/api/users/getuser', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        setUserID(response.data._id);
+      })
+      .catch(error => {
+        console.error('Error fetching user profile:', error);
+      });
+    }
+  }, [token]);
+  
+  useEffect(() => {
+    if (userID) {
+      setCourseData({
+        ...courseData,
+        instructor: userID
+      });
+    }
+  }, [userID]);
+
   const [courseData, setCourseData] = useState({
     title: "",
     description: "",
@@ -10,7 +50,7 @@ function CreateNewCourse() {
     level: "",
     category: "",
     duration: "",
-    instructor: "663d2732c71b1cfc3163eaf9",
+    instructor: "",
     status: "Pending",
     enrolledStudents: [],
     contents: [],
@@ -169,18 +209,31 @@ function CreateNewCourse() {
         throw new Error(json.message);
       }
 
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your Course has been saved Successfully",
+        showConfirmButton: false,
+        timer: 2000
+      });
+
       const json = await response.json();
       console.log(json);
+      navigate("/course_management");
     } catch (error) {
       console.error(error.message);
     }
   };
   return (
-    <div className="top-0 flex flex-col w-screen h-full">
+    <div
+    className="bg-cover bg-center h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800"
+   
+    >
+    <div className="top-0 flex flex-col w-screen h-auto"  style={{ backgroundImage: `url(${bg})` }}>
       <div className="flex flex-col grow-0">
         <NavBar />
       </div>
-      <div className="items-center justify-center w-11/12 h-full mx-auto mt-5 grow">
+      <div className="items-center justify-center w-11/12 h-full mx-auto mt-5 mb-20 grow">
         <section className="px-5 bg-white dark:bg-gray-900 rounded-3xl">
           <div className="px-4 py-8 mx-auto lg:py-16">
             <h2 className="items-center justify-center mx-auto mb-4 text-xl font-bold text-gray-900 uppercase dark:text-white">
@@ -569,14 +622,14 @@ function CreateNewCourse() {
                     <button
                       type="button"
                       onClick={saveQuizQuestion}
-                      className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
+                      className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                     >
-                      Save
+                      Save Question
                     </button>
                     <button
                       type="button"
                       onClick={handleAddQuizQuestion}
-                      className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                      className="inline-flex items-center px-5 py-1.5 ml-10 mt-4 sm:mt-6 text-sm font-medium dark:font-bold text-center dark:text-black bg-primary-700 rounded-lg focus:ring-4 dark:bg-yellow-400 dark:hover:bg-yellow-600 dark:focus:ring-yellow-800"
                     >
                       Add Quiz Question
                     </button>
@@ -584,32 +637,36 @@ function CreateNewCourse() {
                   <button
                     type="button"
                     onClick={saveContent}
-                    className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-gray-800"
+                    className="inline-flex items-center px-2.5 py-1.5 mt-2 text-sm font-medium text-center rounded-lg text-white dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                   >
-                    Save
+                    Save Content
                   </button>
                 </div>
               )}
-              <button
+              <div className="flex justify-between">
+                <button
                 type="button"
                 onClick={handleAddContent}
-                className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center dark:text-black text-white bg-primary-700 dark:font-bold rounded-lg focus:ring-4 focus:ring-primary-200  dark:bg-yellow-400 dark:hover:bg-yellow-600 dark:focus:ring-yellow-800"
               >
                 Add Content
               </button>
               <button
                 type="submit"
-                className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                className="inline-flex items-end justify-end right-0 ml-60 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 dark:font-bold rounded-lg focus:ring-4 focus:ring-primary-200  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Add course
               </button>
+              </div>
+              
             </form>
           </div>
         </section>
       </div>
-      <div className="flex flex-col grow-0">
+      <div className="flex flex-col mt-10 grow-0">
         <Footer />
       </div>
+    </div>
     </div>
   );
 }

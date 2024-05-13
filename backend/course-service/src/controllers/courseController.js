@@ -1,4 +1,5 @@
 const Course = require('../models/courseModel');
+const mongoose = require('mongoose');
 
 //@desc Create a new Course
 //@route /api/courses/
@@ -24,6 +25,25 @@ const getAllCourses = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+//@desc Retreive All courses by instructor
+//@route /api/courses/:${instructorID}
+//@access public
+const getAllCoursesByInstructor = async (req, res) => {
+    try {
+        const instructorID = req.params.id
+        console.log(instructorID);
+
+    if(!mongoose.Types.ObjectId.isValid(instructorID)) {
+        return res.status(404).json({error:'No such Instructor'})
+    }
+        const courses = await Course.find({instructor : instructorID});
+        res.json(courses);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 
 //@desc Retreive a single course by id
@@ -79,4 +99,5 @@ module.exports = {
     getCourseById,
     updateCourse,
     deleteCourse,
+    getAllCoursesByInstructor,
 };

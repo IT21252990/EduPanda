@@ -23,6 +23,7 @@ import ProgressMonitoring from './pages/instructor/ProgressMonitoring';
 import FeedbackAndReviews from './pages/instructor/FeedbackAndReviews';
 import Profile from './pages/instructor/Profile';
 import CreateNewCourse from './pages/instructor/CreateNewCourse';
+import UpdateCourse from './pages/instructor/UpdateCourse';
 
 
 //Learner
@@ -80,6 +81,7 @@ function App() {
           <Route path="/feedback_and_reviews" element={<FeedbackAndReviews />} />
           <Route path="/instructor_profile" element={<Profile />} />
           <Route path="/create_new_course" element={<CreateNewCourse />} />
+          <Route path="/update_course/:courseId" element={<UpdateCourse />} />
 
 
           {/* learner */}

@@ -141,7 +141,7 @@ exports.loginUser = async (req, res) => {
   if (password=== user.password) {
     
   // Generate Token
-  const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1h' });
+  const token = jwt.sign({ id: user.id }, secretKey, { expiresIn: '1d' });
   
   // Send HTTP-only cookie
   res.cookie("token", token, {

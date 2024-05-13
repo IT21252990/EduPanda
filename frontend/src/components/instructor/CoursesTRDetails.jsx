@@ -5,63 +5,22 @@ export default function CoursesTRDetails({ course }) {
     <>
       {course.contents.map((content, index) => (
         <div key={index} className="rounded border-b mx-5 mb-5 dark:bg-gray-900">
-          <tr className="text-sm ">
-          <th
-              scope="row"
-              className="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Title
-            </th>
-            <td className="px-2 py-2">{content.title}</td>
-          </tr>
-          <tr >
-            <th
-              scope="row"
-              className="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Type
-            </th>
-            <td className="px-2 py-2">{content.type}</td>
-          </tr>
-          {content.type === "Lecture" && (
-            <tr >
-              <th
-                scope="row"
-                className="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Lecture Notes
-              </th>
-              <td className="px-2 py-2">{content.lectureNotes}</td>
-            </tr>
-          )}
-          {content.type === "Video" && (
-            <tr >
-              <th
-                scope="row"
-                className="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Video URL
-              </th>
-              <td className="px-2 py-2">{content.videoURL}</td>
-            </tr>
-          )}
-          {/* {content.type === "Quiz" && ( */}
-            <tr>
-              <th
-                scope="row"
-                className="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Quiz Questions
-              </th>
-              <td className="px-2 py-2">
-                <ul className="px-4 list-decimal">
-                  {content.quizQuestions.map((question, i) => (
-                    <li key={i}>{question}</li>
-                  ))}
-                </ul>
-              </td>
-            </tr>
-          {/* )} */}
+          <div className="text-sm grid grid-cols-2 gap-4 p-4">
+            <div className="font-medium text-gray-900 dark:text-white">Title</div>
+            <div>{content.title}</div>
+            <div className="font-medium text-gray-900 dark:text-white">Type</div>
+            <div>{content.type}</div>
+            <div className="font-medium text-gray-900 dark:text-white">Lecture Notes</div>
+            <div>{content.lectureNotes}</div>
+            <div className="font-medium text-gray-900 dark:text-white">Quiz Questions</div>
+            <div>
+              <ul className="list-decimal">
+                {content.quizQuestions.map((question, i) => (
+                  <li key={i}>{question}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       ))}
     </>
