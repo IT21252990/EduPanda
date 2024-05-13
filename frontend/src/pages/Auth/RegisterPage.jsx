@@ -136,8 +136,9 @@ const Register = () => {
               </form>
               {showOTPInput && (
                 <form onSubmit={handleSubmitOTP}>
-                  <input type="text" value={otp} onChange={e => setOtp(e.target.value)} placeholder="Enter OTP" />
-                  <button type="submit">Submit OTP</button>
+                  <p className="text-sm font-light text-gray-500 dark:text-gray-400">We have sent the verification code to your email address</p>
+                  <input className='otptext' type="text" value={otp} onChange={e => setOtp(e.target.value)} placeholder="Enter OTP" />
+                  <button className='otpbutton' type="submit">Submit OTP</button>
                 </form>
               )}
             </div>

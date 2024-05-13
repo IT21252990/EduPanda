@@ -139,6 +139,32 @@ const InstructorMyProfile = () => {
   };
 
 
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    // Define a function to fetch instructor courses
+    const fetchInstructorCourses = async () => {
+      try {
+        // Make a GET request to your backend API to fetch instructor courses
+        const response = await axios.get('http://localhost:5002/api/users/AsignedCourses', {
+          headers: {
+            Authorization: `Bearer ${token}` // Include your JWT token here
+          }
+        });
+        // Extract the titles from the response data
+        const { titles } = response.data;
+        // Update the state with the fetched titles
+        setCourses(titles);
+      } catch (error) {
+        console.error('Error fetching instructor courses:', error);
+      }
+    };
+
+    // Call the fetchInstructorCourses function when the component mounts
+    fetchInstructorCourses();
+  }, []); // Empty dependency array ensures that the effect runs only once when the component mounts
+
+
   return (
     <div className="flex flex-col w-screen h-full top-0">
      <div className="flex flex-col grow-0">
@@ -173,6 +199,45 @@ const InstructorMyProfile = () => {
                   <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{user.email}</span>
                   <span className="profiletext-gray-700 font-bold tracking-wider mb-2">{formData.phone}</span>
                 </div>
+
+
+
+
+
+    <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700" style={{ marginTop: '20px' }}>
+    <div class="flex items-center justify-between mb-4">
+        <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Assigned Courses</h5>
+        <a href="/MyCourses" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+            View
+        </a>
+   </div>
+   <div class="flow-root">
+   {courses.length === 0 ? (
+        <p>No courses assigned yet.</p>
+      ) : (
+        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+          {courses.map((course, index) => (
+            <li key={index}>
+                <div class="flex items-center">
+                    
+                    <div class="flex-1 min-w-0 ms-4">
+                    <p className="text-sm font-medium text-gray-900 truncate dark:text-white" style={{ margin: '10px' }}>
+                    {course}
+                        </p>
+                        
+                    </div>
+                    
+                </div>
+            </li>
+
+
+))}
+        </ul>
+       )}
+</div>
+</div>
+
+
               </div>
             </div>
             <div className="col-span-4 sm:col-span-7">

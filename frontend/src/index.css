@@ -76,3 +76,16 @@ h2.updateprofile {
   font-weight: 800;
   text-align: center;
 }
+
+
+/* registration */
+.otptext {
+  background-color: #374151;
+  border-radius: 9px;
+}
+.otpbutton {
+  background-color: #1c64f2;
+  padding: 8px;
+  border-radius: 8px;
+  margin: 11px;
+}
