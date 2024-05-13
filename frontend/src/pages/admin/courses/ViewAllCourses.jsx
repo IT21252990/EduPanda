@@ -8,6 +8,9 @@ export default function ViewAllCourses() {
   const [courses, setCourses] = useState([]);
   const [dropdownCourseId, setDropdownCourseId] = useState(null);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
   const toggleDropdown = (courseId) => {
     setDropdownCourseId((prevId) => (prevId === courseId ? null : courseId));
   };
@@ -27,6 +30,17 @@ export default function ViewAllCourses() {
     };
     fetchData();
   }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    let results = courses.filter((course) =>
+      course.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
+  }, [courses, searchTerm]);
 
   return (
     <>
@@ -72,6 +86,8 @@ export default function ViewAllCourses() {
                   className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Search Courses . . ."
                   required
+                  value={searchTerm}
+                  onChange={handleSearchChange}
                 />
                 <button
                   type="submit"
@@ -113,65 +129,74 @@ export default function ViewAllCourses() {
                   </tr>
                 </thead>
                 <tbody>
-                  {courses.map((course) => (
-                    <React.Fragment key={course._id}>
-                      <tr
-                        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45"
-                        onClick={() => toggleDropdown(course._id)}
-                      >
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  {searchResults.length > 0 ? (
+                    searchResults.map((course) => (
+                      <React.Fragment key={course._id}>
+                        <tr
+                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45"
+                          onClick={() => toggleDropdown(course._id)}
                         >
-                          {course.title}
-                        </th>
-                        <td className="px-6 py-4">${course.price}</td>
-                        <td className="px-6 py-4">
-                          {course.instructor ? course.instructor.name : "N/A"}
-                        </td>
-                        <td className="px-6 py-4">{course.category}</td>
-                        <td className="px-6 py-4">{course.status}</td>
-                        <td className="px-6 py-4">{new Date(course.updated_at).toLocaleDateString()}</td>
-                        <td className="px-6 py-4 text-right">
-                          <button
-                            type="button"
-                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                           >
-                            <svg
-                              className="w-6 h-6 text-gray-800 dark:text-white dark:hover:text-blue-500"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              fill="none"
-                              viewBox="0 0 24 24"
+                            {course.title}
+                          </th>
+                          <td className="px-6 py-4">${course.price}</td>
+                          <td className="px-6 py-4">
+                            {course.instructor ? course.instructor.name : "N/A"}
+                          </td>
+                          <td className="px-6 py-4">{course.category}</td>
+                          <td className="px-6 py-4">{course.status}</td>
+                          <td className="px-6 py-4">
+                            {new Date(course.updated_at).toLocaleDateString()}
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <button
+                              type="button"
+                              className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                             >
-                              <path
-                                stroke="currentColor"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="m19 9-7 7-7-7"
-                              />
-                            </svg>
-                          </button>
-                        </td>
-                      </tr>
-                      {dropdownCourseId === course._id && (
-                        < CourseTR course={course}/>
-                      
-                      )}
-                      {dropdownCourseId === course._id && (
-                        <tr className="bg-white border-b dark:bg-gray-700 dark:border-gray-700 text-sm ">
-                        <td colSpan="7">
-                          <div className="w-full dark:bg-gray-700">
-                            <CoursesTRDetails course={course} />
-                          </div>
-                        </td>
-                      </tr>
-                      )}
-                    </React.Fragment>
-                  ))}
+                              <svg
+                                className="w-6 h-6 text-gray-800 dark:text-white dark:hover:text-blue-500"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="m19 9-7 7-7-7"
+                                />
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                        {dropdownCourseId === course._id && (
+                          <CourseTR course={course} />
+                        )}
+                        {dropdownCourseId === course._id && (
+                          <tr className="bg-white border-b dark:bg-gray-700 dark:border-gray-700 text-sm ">
+                            <td colSpan="7">
+                              <div className="w-full dark:bg-gray-700">
+                                <CoursesTRDetails course={course} />
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <tr className="bg-white border-b-4 dark:border-b-blue-400 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45">
+                      <td colSpan="6" className="py-4 text-center">
+                        <h1 className="text-gray-500">No results found..</h1>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

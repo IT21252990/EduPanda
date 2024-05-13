@@ -54,6 +54,7 @@ export default async function ApproveSwal(courseId, courseName, instructorEmail)
 
       console.log(JSON.stringify(emailData));
       
+      
       // Check if email sending was successful
       if (!emailResponse.ok) {
         const errorText = await emailResponse.text();
@@ -61,6 +62,7 @@ export default async function ApproveSwal(courseId, courseName, instructorEmail)
       }
 
       // No need to parse JSON, as we expect a plain text response
+      
 
       Swal.fire({
         title: "Approved",
@@ -70,7 +72,12 @@ export default async function ApproveSwal(courseId, courseName, instructorEmail)
         iconColor: "#057A55",
         background: "#1F2937",
         color: "#E5E7EB"
+      }) .then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
       });
+      
     }
   } catch (error) {
     Swal.fire({
@@ -80,6 +87,12 @@ export default async function ApproveSwal(courseId, courseName, instructorEmail)
       confirmButtonColor: "#1A56DB",
       background: "#1F2937",
       color: "#E5E7EB"
-    });
+    }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
+      });
   }
+
+
 }

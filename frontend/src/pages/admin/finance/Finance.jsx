@@ -6,9 +6,23 @@ import RevenueChart from "../../../components/admin/Finance/RevenueChart";
 export default function Finance() {
   const [enrollments, setEnrollments] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
   useEffect(() => {
     fetchEnrollments();
   }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    let results = enrollments.filter((enrollment) =>
+      enrollment.cid.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setSearchResults(results);
+  }, [enrollments, searchTerm]);
 
   const fetchEnrollments = async () => {
     try {
@@ -70,6 +84,8 @@ export default function Finance() {
                 className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search Courses . . ."
                 required
+                value={searchTerm}
+                onChange={handleSearchChange}
               />
               <button
                 type="submit"
@@ -111,7 +127,8 @@ export default function Finance() {
                 </tr>
               </thead>
               <tbody>
-                {enrollments.map((enrollment, index) => (
+              {searchResults.length > 0 ? (
+                    searchResults.map((enrollment , index) => (
                   <tr
                     key={index}
                     className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45"
@@ -137,7 +154,14 @@ export default function Finance() {
                       {new Date(enrollment.created_at).toLocaleTimeString()}
                     </td>
                   </tr>
-                ))}
+                 ))
+                ) : (
+                  <tr className="bg-white border-b-4 dark:border-b-blue-400 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45">
+                    <td colSpan="6" className="py-4 text-center">
+                      <h1 className="text-gray-500">No transactions found..</h1>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

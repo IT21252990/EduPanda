@@ -65,6 +65,10 @@ export default async function RejectSwal(courseId, courseName, instructorEmail) 
         iconColor: "#d33",
         background: "#1F2937",
         color: "#E5E7EB"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
       });
 
       // Here you can update the UI as needed, e.g., remove the rejected course from the list
@@ -76,6 +80,10 @@ export default async function RejectSwal(courseId, courseName, instructorEmail) 
         confirmButtonColor: "#3085d6",
         background: "#1F2937",
         color: "#E5E7EB"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload();
+        }
       });
     }
   }
