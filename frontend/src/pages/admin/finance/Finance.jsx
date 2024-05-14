@@ -5,7 +5,6 @@ import RevenueChart from "../../../components/admin/Finance/RevenueChart";
 
 export default function Finance() {
   const [enrollments, setEnrollments] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -19,7 +18,7 @@ export default function Finance() {
 
   useEffect(() => {
     let results = enrollments.filter((enrollment) =>
-      enrollment.cid.title.toLowerCase().includes(searchTerm.toLowerCase())
+      enrollment.cid && enrollment.cid.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(results);
   }, [enrollments, searchTerm]);
@@ -55,7 +54,7 @@ export default function Finance() {
 
           <form className="max-w-md mx-auto my-3">
             <label
-              for="default-search"
+              htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
             >
               Search
@@ -116,7 +115,7 @@ export default function Finance() {
                     Price
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Pyement type
+                    Payment type
                   </th>
                   <th scope="col" className="px-6 py-3">
                     Date
@@ -127,34 +126,34 @@ export default function Finance() {
                 </tr>
               </thead>
               <tbody>
-              {searchResults.length > 0 ? (
-                    searchResults.map((enrollment , index) => (
-                  <tr
-                    key={index}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45"
-                  >
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                {searchResults.length > 0 ? (
+                  searchResults.map((enrollment, index) => (
+                    <tr
+                      key={index}
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45"
                     >
-                      {index + 1}
-                    </th>
-                    <td className="px-6 py-4">
-                      {enrollment.uid ? enrollment.uid.name : "N/A"}
-                    </td>
-                    <td className="px-6 py-4">{enrollment.cid.title}</td>
-                    <td className="px-6 py-4">${enrollment.cid.price}</td>
-                    <td className="px-6 py-4">
-                      {enrollment.paymentType ? enrollment.paymentType : "N/A"}
-                    </td>
-                    <td className="px-6 py-4">
-                      {new Date(enrollment.created_at).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4">
-                      {new Date(enrollment.created_at).toLocaleTimeString()}
-                    </td>
-                  </tr>
-                 ))
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {index + 1}
+                      </th>
+                      <td className="px-6 py-4">
+                        {enrollment.uid ? enrollment.uid.name : "N/A"}
+                      </td>
+                      <td className="px-6 py-4">{enrollment.cid ? enrollment.cid.title : "N/A"}</td>
+                      <td className="px-6 py-4">${enrollment.cid ? enrollment.cid.price : "N/A"}</td>
+                      <td className="px-6 py-4">
+                        {enrollment.paymentType ? enrollment.paymentType : "N/A"}
+                      </td>
+                      <td className="px-6 py-4">
+                        {new Date(enrollment.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4">
+                        {new Date(enrollment.createdAt).toLocaleTimeString()}
+                      </td>
+                    </tr>
+                  ))
                 ) : (
                   <tr className="bg-white border-b-4 dark:border-b-blue-400 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-opacity-45">
                     <td colSpan="6" className="py-4 text-center">

@@ -11,8 +11,11 @@ const CategoryDistributionChart = ({ enrollments }) => {
 
     const categoryCounts = {};
     enrollments.forEach((enrollment) => {
-      const category = enrollment.cid.category;
-      categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      // Add null check for enrollment.cid
+      if (enrollment.cid && enrollment.cid.category) {
+        const category = enrollment.cid.category;
+        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      }
     });
 
     // Destroy previous chart instance if exists

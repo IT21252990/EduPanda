@@ -13,27 +13,27 @@ export default function RevenueChart({ enrollments }) {
 
   const renderChart = () => {
     const ctx = chartRef.current.getContext("2d");
-
+  
     if (ctx) {
       if (chartRef.current.chart) {
         chartRef.current.chart.destroy();
       }
-
+  
       const revenueByDate = {};
-
+  
       enrollments.forEach((enrollment) => {
-        const date = new Date(enrollment.created_at).toLocaleDateString();
-        const price = enrollment.cid.price;
+        const date = new Date(enrollment.createdAt).toLocaleDateString();
+        const price = enrollment.cid ? enrollment.cid.price : 0; // Add null check here
         if (revenueByDate[date]) {
           revenueByDate[date] += price;
         } else {
           revenueByDate[date] = price;
         }
       });
-
+  
       const labels = Object.keys(revenueByDate);
       const data = Object.values(revenueByDate);
-
+  
       chartRef.current.chart = new Chart(ctx, {
         type: "line",
         data: {
@@ -69,6 +69,7 @@ export default function RevenueChart({ enrollments }) {
       });
     }
   };
+  
 
   return (
     // <div className=" w-3/4 ml-36 bg-white rounded-lg shadow dark:bg-gray-800 m-4 p-4 md:p-6">
