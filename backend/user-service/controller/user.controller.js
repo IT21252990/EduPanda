@@ -4,7 +4,7 @@ const User = require("../models/user.model");
 const Enrollment = require("../models/enrollmentModel");
 const Course = require("../models/courseModel");
 
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs"); 
 const jwt = require("jsonwebtoken");
 const Token = require("../models/token.model");
 const crypto = require("crypto");
@@ -73,9 +73,7 @@ exports.registerrUser = async (req, res) => {
       let user = await User.findOne({ email });
   
       if (user) {
-        if(user.isVerified){
           return res.status(400).json({ success: false, message: 'User already exists' });
-        }
       }
 
       // Generate OTP
