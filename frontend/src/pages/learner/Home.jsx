@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../../components/learner/NavBar";
 import CourseCard from "../../components/learner/CourseCard";
+import bg from "../../assets/learnerbg.jpg"
 
 function Home() {
     const [courseIds, setCourseIds] = useState([]);
@@ -44,15 +45,25 @@ function Home() {
     }, []);
 
     return (
-        <div className="flex flex-col w-screen h-full top-0">
+        <div className="flex flex-col w-screen top-0 relative bg-cover bg-center h-screen overflow-y-auto scrollbar-thumb-gray-400 opacity-100" 
+            style={{ backgroundImage: `url(${bg})` }}>
+                <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.8)' 
+    }}>
             <NavBar />
-            <div className="container mx-auto my-8 px-4">
-                <h2 className="text-3xl font-bold mb-4">All Courses</h2>
+            <div className="container mx-auto my-8 px-4 ">
+                <h2 className="text-3xl font-bold mb-4 text-center">All Courses</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {courseIds.map((course, index) => (
                         <CourseCard key={index} course={course} />
                     ))}
                 </div>
+            </div>
             </div>
         </div>
     );
