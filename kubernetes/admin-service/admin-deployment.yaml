@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: admin-service
-          image: adminservice:v1
+          image: kalingajayathilaka/adminservice
           imagePullPolicy: Always
           ports:
             - containerPort: 5001

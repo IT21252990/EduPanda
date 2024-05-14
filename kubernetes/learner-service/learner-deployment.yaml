@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: learner-service
-          image: learnerservice:v1
+          image: kalingajayathilaka/learnerservice
           imagePullPolicy: Always
           ports:
             - containerPort: 5003

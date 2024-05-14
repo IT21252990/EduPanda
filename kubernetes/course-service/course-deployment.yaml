@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: course-service
-          image: courseservice:v1
+          image: kalingajayathilaka/courseservice
           imagePullPolicy: Always
           ports:
             - containerPort: 5000

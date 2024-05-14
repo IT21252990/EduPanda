@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: email-service
+  name: frontend
   labels:
-    app: email-service
+    app: frontend
 spec:
   replicas: 1 # Copies of each pod to run
   selector:
     matchLabels:
-      app: email-service
+      app: frontend
   template:
     metadata:
       labels:
-        app: email-service
+        app: frontend
     spec:
       containers:
-        - name: email-service
-          image: kalingajayathilaka/emailservice
+        - name: frontend
+          image: kalingajayathilaka/frontend
           imagePullPolicy: Always
           ports:
-            - containerPort: 9123
+            - containerPort: 5173

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: userservice:v1
+          image: kalingajayathilaka/userservice
           imagePullPolicy: Always
           ports:
             - containerPort: 5002
